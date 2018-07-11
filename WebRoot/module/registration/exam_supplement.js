@@ -1,0 +1,393 @@
+var wjcllx = [['1', '考生名单审核'],['2', '补报考生审核'],['3', '删除考生审核']];
+var wjcllxStore = new Ext.data.SimpleStore({  
+  fields : ['value', 'text'],  
+  data : wjcllx  
+});
+Ext.extend(system.application.baseClass,{
+	/** 初始化 **/
+    init: function(){
+    	this.initDate();
+ 		this.initComponent();
+ 		this.initListener();
+ 		this.initFace();
+		this.initQueryDate();
+    },
+    /** 初始化页面、内存等基本数据 **/
+    initDate:function(){
+    	
+    },
+    /** 对组件设置监听 **/
+    initListener:function(){
+    	
+    },
+    
+    initComponent :function(){
+    	var sm = new Ext.grid.CheckboxSelectionModel({singleSelect:true,
+    		listeners:{
+    			"selectionchange":function(sm){
+    		           var str = sm.getSelections();
+    		           if(str[0].get("BBFLAG")=="1"){
+    		        	   Ext.getCmp('sh').setDisabled(true);
+    		           }else{
+    		        	   Ext.getCmp('sh').setDisabled(false);
+    		           }
+    			}
+    		}});
+		var cm = [
+		    sm,
+			{header: "年度",   align:"center", sortable:true, dataIndex:"XN"},
+			{header: "季度",   align:"center", sortable:true, dataIndex:"XQ"},
+			{header: "考试名称",   align:"center", sortable:true, dataIndex:"EXAMNAME",renderer : renderdel,listeners:{
+				 "click":function(){    //监听"select"事件
+	       				this.showLackOfTestStudent2();
+	                 },
+	                 scope:this
+					}},
+			{header: "考试类型",   align:"center", sortable:true, dataIndex:"LX"},
+			{header: "审核状态",   align:"center", sortable:true, dataIndex:"BBFLAG",renderer : renderdel2}
+		];
+		function renderdel(value, cellmeta, record, rowIndex, columnIndex, store){ 
+  			var lcid = store.getAt(rowIndex).get('LCID'); 
+            var str = "<a href='#' id='"+lcid+"'>"+value+"</a>";
+            return str;  
+        } 
+		function renderdel2(value, cellmeta, record, rowIndex, columnIndex, store){ 
+			var str = "";
+  			if(value=="1"){
+  				str = "已审核";
+  			}else{
+  				str="未审核";
+  			}
+            return str;  
+        } 
+	this.grid2 = new Ext.ux.GridPanel({
+		cm:cm,
+		sm:sm,
+		title:"考生报名-补报考生审核",
+		tbar:[ 
+			  "->",{xtype:"button",id:"sh",text:"审核",iconCls:"p-icons-save",handler:this.updateAll2,scope:this},
+			  ],
+		page:true,
+		rowNumber:true,
+		region:"center",
+		excel:true,
+		action:"review_getListPage.do",
+		fields :["LCID","XN","XQ","EXAMNAME","LX","DWID","DWTYPE","BBFLAG"],
+		border:false
+		});
+	
+	//搜索区域
+	var xn_find=new Ext.ux.form.XnxqField({width:210,id:"supxn_find2",readOnly:true});
+	var xn_sh	= new Ext.form.ComboBox({id:"xn_sh",store:wjcllxStore,value:'2',displayField:'text',valueField:'value',mode:'local',triggerAction:'all',width:200,editable:false,listeners:{
+		"select":function(combo, record, index){
+			/*if(record.get("value")==3){
+				parent.Ext.getCmp("myTabs").setActiveTab(2);
+				Ext.getCmp("xn_sh").setValue(2);
+			}
+			if(record.get("value")==1){
+				parent.Ext.getCmp("myTabs").setActiveTab(0);
+				Ext.getCmp("xn_sh").setValue(2);
+			}*/
+		}
+	}});
+	var cx = new Ext.Button({x:17,y:-10,cls:"base_btn",text:"查询",handler:this.selectExamSubjectS,scope:this});
+	var cz = new Ext.Button({x:87,y:-10,cls:"base_btn",text:"重置",handler:function(){this.search2.getForm().reset()},scope:this});
+	
+	this.search2 = new Ext.form.FormPanel({
+		   region: "north",
+	       height:100,
+	       items:[{  
+	         layout:'form',  
+	         xtype:'fieldset',  
+	         style:'margin:10 10',
+	         title:'查询条件',  
+	         items: [
+                {
+                	xtype:"panel",
+					layout:"table", 
+					layoutConfig: { 
+						columns: 6
+						}, 
+					baseCls:"table",
+					items:[
+						{html:"年度：",baseCls:"label_right",width:120},
+						{items:[xn_find],baseCls:"component",width:210},
+						{html:"审核类型：",baseCls:"label_right",width:120},
+						{items:[xn_sh],baseCls:"component",width:210},
+						{layout:"absolute", items:[cx,cz],baseCls:"component_btn",width:160}
+						] 
+                }]  
+	       }]  
+    	})
+		this.panel2=new Ext.Panel({
+			id:"panel2",
+			region:"north",
+			width:"auto",
+			layout:"border",
+			border:false,
+			items:[this.search2,this.grid2]
+		});
+	},
+	 /** 初始化界面 **/
+    initFace:function(){
+    	this.panel_top2=new Ext.Panel({
+			layout:"fit",
+    		id:"panel_topES2",
+    		region:"north",
+    		border:false,
+    		items:[this.panel2]
+    	});
+	this.addPanel({layout:"fit",items:[this.panel_top2]});
+    },
+    initQueryDate:function(){
+    	this.grid2.$load();
+    },
+	selectExamSubjectS:function(){
+		var xn=Ext.getCmp('supxn_find2').getValue();
+		this.grid2.$load({"xn":xn});
+	},updateAll2:function(){
+		var selectedBuildings = this.grid2.getSelectionModel().getSelections();
+    	if(selectedBuildings.length != 1){
+    		Ext.MessageBox.alert("消息","请选择一条数据！");
+    		return;
+    	}
+    	var lcid = selectedBuildings[0].get("LCID");
+//    	var store3 = new Ext.data.JsonStore({
+//    		autoLoad:false,
+//    		url:'review_updateAll.do?lcid='+lcid
+//    	});
+//    	store3.reload();
+    	var thiz=this;
+    	Ext.Ajax.request({   
+       		url:'review_updateBB.do',
+       		params:{
+       			'lcid':lcid
+        	},
+        success: function(resp,opts) {
+        	var respText = Ext.util.JSON.decode(resp.responseText);
+           	Ext.MessageBox.alert("提示",respText.msg);
+           	thiz.selectExamSubjectS();thiz.selectExamSubjectS();
+        },
+        failure: function(resp,opts){
+            Ext.Msg.alert('错误', "审核失败！");
+        }  
+      	
+       });
+	},
+	showLackOfTestStudent2:function(){
+    	var selected =  this.grid2.getSelectionModel().getSelected();
+    	if(!selected){
+    		Ext.MessageBox.alert("消息","请选择一条记录！");
+    		return;
+    	}
+    	var selectedBuildings = this.grid2.getSelectionModel().getSelections();
+    	var ids =selectedBuildings[0].get("LCID");
+    	this.lcid=ids;
+    	this.createShowLackOfTestStudent2();
+    	var panel=Ext.getCmp("panel_topES2");
+  		panel.remove(Ext.getCmp("panel2"));
+  		panel.add(this.panel_top3);
+  		panel.doLayout(false);
+  		this.CheatGrid2.$load({"lcId":this.lcid});
+    },
+    createShowLackOfTestStudent2:function(){
+		var sm = new Ext.grid.CheckboxSelectionModel({singleSelect:false});
+		var cm = [
+					sm,
+					{header: "参考单位",   align:"center", sortable:true, dataIndex:"XXMC"},
+					{header: "姓名",   align:"center", sortable:true, dataIndex:"XM"},
+					{header: "性别",   align:"center", sortable:true, dataIndex:"XB"},
+					{header: "考号",   align:"center", sortable:true, dataIndex:"KSCODE"},
+					{header: "身份证号",   align:"center", sortable:true, dataIndex:"SFZJH"}
+				];
+		this.CheatGrid2 = new Ext.ux.GridPanel({
+			cm:cm,
+			sm:sm,
+			id:"CheatGrid2",
+			title:"考生报名-补报考生审核",
+			tbar:[ 
+				  "->",{xtype:"button",text:"返回",iconCls:"p-icons-unpassing",handler:this.fanhui2,scope:this}
+				  ,"->",{xtype:"button",text:"审核通过",iconCls:"p-icons-save",handler:this.updateExamRoom2,scope:this},
+				  ],
+			page:true,
+			rowNumber:true,
+			region:"center",
+			action:"reviewBb_getListPage.do?lcid="+getLocationPram("lcid"),
+			fields :["XXMC","XM","XB","KSCODE","XJH","SFZJH","SCKSID"],
+			border:false
+			});
+		this.CheatGrid2.on("render",function(){    
+			this.CheatGrid2.selModel.selectAll();  
+		    //延迟300毫秒  
+		   },this,{delay:400});
+		//搜索区域
+		var bj	= new Ext.ux.Combox({width:190,id:"bj_find2"});
+		var nj	= new Ext.ux.Combox({width:190,id:"nj_find2",
+			listeners:{
+				 "select":function(combo,record,number){    //监听"select"事件
+                        var id=combo.getValue();           //取得ComboBox0的选择值
+						var newStore = new Ext.data.JsonStore({
+										autoLoad:false,
+										url:'dropListAction_classByGrade.do?params='+id,
+										fields:["CODEID","CODENAME"]
+									});
+						Ext.getCmp("bj_find2").clearValue(); 
+                    	Ext.getCmp("bj_find2").store=newStore;  
+                        newStore.reload();
+                        Ext.getCmp("bj_find2").bindStore(newStore);
+                    },
+                    scope:this
+			}
+		});
+		var schoolname	= new Ext.ux.Combox({width:190,id:"sch_find2",
+			listeners:{
+				 "select":function(combo,record,number){    //监听"select"事件
+                        var id=combo.getValue();           //取得ComboBox0的选择值
+						var newStore = new Ext.data.JsonStore({
+										autoLoad:false,
+										url:'dropListAction_gradeBySchool.do?params='+id,
+										fields:["CODEID","CODENAME"]
+									});
+						Ext.getCmp("nj_find2").clearValue(); 
+						Ext.getCmp("bj_find2").clearValue(); 
+                    	Ext.getCmp("nj_find2").store=newStore;  
+                        newStore.reload();
+                        Ext.getCmp("nj_find2").bindStore(newStore);
+                    },
+                    scope:this
+			}
+		});
+		var xjjyj	= new Ext.ux.Combox({ width:190,id:"xjjyj_find2",
+			listeners:{
+				 "select":function(combo,record,number){    //监听"select"事件
+                        var id=combo.getValue();           //取得ComboBox0的选择值
+						var newStore = new Ext.data.JsonStore({
+										autoLoad:false,
+										url:'dropListAction_school.do?params='+id,
+										fields:["CODEID","CODENAME"]
+									});
+						Ext.getCmp("sch_find2").clearValue(); 
+						Ext.getCmp("nj_find2").clearValue(); 
+						Ext.getCmp("bj_find2").clearValue(); 
+                    	Ext.getCmp("sch_find2").store=newStore;  
+                        newStore.reload();
+                        Ext.getCmp("sch_find2").bindStore(newStore);
+                    },
+                    scope:this
+			}
+		});
+		var sjjyj	= new Ext.ux.Combox({dropAction:"sjjyj", width:190,id:"sjjyj_find2",
+			listeners:{
+				 "select":function(combo,record,number){    //监听"select"事件
+                        var id=combo.getValue();           //取得ComboBox0的选择值
+						var newStore = new Ext.data.JsonStore({
+										autoLoad:false,
+										url:'dropListAction_jyj.do?params='+id,
+										fields:["CODEID","CODENAME"]
+									});
+						Ext.getCmp("xjjyj_find2").clearValue(); 
+						Ext.getCmp("sch_find2").clearValue(); 
+						Ext.getCmp("nj_find2").clearValue(); 
+						Ext.getCmp("bj_find2").clearValue(); 
+                    	Ext.getCmp("xjjyj_find2").store=newStore;  
+                        newStore.reload();
+                        Ext.getCmp("xjjyj_find2").bindStore(newStore);
+                    },
+                    scope:this
+			}
+		});
+		//var xjh = new Ext.form.TextField({fieldLabel:"学号",id:"xjh_find2",maxLength:200, width:190});
+		var cx = new Ext.Button({x:17,y:-10,cls:"base_btn",text:"查询",handler:this.selectExamSubject2,scope:this});
+		var cz = new Ext.Button({x:87,y:-10,cls:"base_btn",text:"重置",handler:function(){this.CheatSearch2.getForm().reset()},scope:this});
+		this.CheatSearch2 = new Ext.form.FormPanel({
+		       id:"CheatSearch2",
+		       region: "north",
+		       height:130,
+		       items:[{  
+		         layout:'form',  
+		         xtype:'fieldset',  
+		         style:'margin:10',
+		         title:'查询条件',  
+		         items: [
+                    {
+                    	xtype:"panel",
+						layout:"table", 
+						layoutConfig: { 
+							columns: 7
+							}, 
+						baseCls:"table",
+						items:[
+							{html:"上级单位：",baseCls:"label_right",width:120},
+							{items:[sjjyj],baseCls:"component",width:210},
+							{html:"组织单位：",baseCls:"label_right",width:120},
+							{items:[xjjyj],baseCls:"component",width:210},
+							{html:"参考单位：",baseCls:"label_right",width:120}, 
+							{items:[schoolname],baseCls:"component",width:210},
+							{baseCls:"label_right",width:0},
+							{html:"等级：",baseCls:"label_right",width:120},
+							{items:[nj],baseCls:"component",width:210},
+							{html:"科目：",baseCls:"label_right",width:120}, 
+							{items:[bj],baseCls:"component",width:210},
+							{layout:"absolute", items:[cx,cz],baseCls:"component_btn",width:280,colspan:2}
+							//{html:"学号：",baseCls:"label_right",width:120},
+							//{items:[xjh],baseCls:"component",width:210}
+							] 
+                    }]  
+		       }]  
+	    	});
+		this.panel_top3=new Ext.Panel({
+			id:"panel_topES3",
+			region:"north",
+			width:"auto",
+			layout:"border",
+			border:false,
+			items:[this.CheatSearch2,this.CheatGrid2]
+		});
+	},
+	selectExamSubject3:function(){
+		var xx = Ext.getCmp('sch_find2').getValue();
+		var nj = Ext.getCmp('nj_find2').getValue();
+		var bj = Ext.getCmp('bj_find2').getValue();
+		//var xjh = Ext.getCmp('xjh_find2').getValue();
+		this.CheatGrid.$load({"xx":xx,"nj":nj,"bj":bj});//,"xjh":xjh
+	},fanhui2:function(){
+		this.initComponent();
+    	var panel=Ext.getCmp("panel_topES2");
+  		panel.remove(Ext.getCmp("panel_topES3"));
+  		panel.add(this.panel2);
+  		panel.doLayout(false);
+  		var xn=Ext.getCmp('supxn_find2').getValue();
+		this.grid2.$load({"xn":xn});
+    },updateExamRoom2:function(){
+    	var selectedBuildings = this.CheatGrid.getSelectionModel().getSelections();
+    	if(selectedBuildings.length < 1){
+    		Ext.MessageBox.alert("消息","请选择一条数据！");
+    		return;
+    	}
+    	var ksid = "";
+    	for(var i=0;i<selectedBuildings.length;i++){
+    		ksid += "'" +selectedBuildings[i].get("SCKSID") +"',";
+    	}
+//    	var store3 = new Ext.data.JsonStore({
+//    		autoLoad:false,
+//    		url:'review_updateBb.do?ksid='+ksid
+//    	});
+//    	store3.reload();
+    	//this.CheatGrid.$load();
+    	var thiz=this;
+    	Ext.Ajax.request({   
+       		url:'review_updateBb.do',
+       		params:{
+       			'ksid':ksid
+        	},
+        success: function(resp,opts) {
+        	var respText = Ext.util.JSON.decode(resp.responseText);
+           	Ext.MessageBox.alert("提示",respText.msg);
+           	thiz.selectExamSubject2();
+        },
+        failure: function(resp,opts){
+            Ext.Msg.alert('错误', "审核失败！");
+        }  
+       });
+    }
+});

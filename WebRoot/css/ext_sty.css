@@ -1,0 +1,110 @@
+.ext_tabr{
+	FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#FCFBF9,endColorStr=#E8E7E8); /*IE 6 7 8*/ 
+
+background: -ms-linear-gradient(top, #FCFBF9,  #E8E7E8);        /* IE 10 */
+
+background:-moz-linear-gradient(top,#FCFBF9,#E8E7E8);/*»ðºü*/ 
+
+background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#FCFBF9), to(#E8E7E8));/*¹È¸è*/ 
+
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FCFBF9), to(#E8E7E8));      /* Safari 4-5, Chrome 1-9*/
+
+background: -webkit-linear-gradient(top, #FCFBF9, #E8E7E8);   /*Safari5.1 Chrome 10+*/
+
+background: -o-linear-gradient(top, #FCFBF9, #E8E7E8);  /*Opera 11.10+*/
+}
+.table .x-table-layout{
+	margin: 0 auto;
+}
+.table .x-table-layout-cell{
+	background-color: #D4E1F1;height: 32px;
+}
+.table .label_right{
+	font-size: 13px;text-align: right;float: right;
+}
+.table .label_center{
+	font-size: 13px;text-align: center;
+}
+.table .x-table-layout-cell .component{
+	height: 100%;
+	text-align: center;
+	display:table;
+}
+
+.table .x-table-layout-cell .downLoad{
+	height: 31;
+	text-align: center;
+	display:table;
+	font-size: 12;
+	color: blue;
+	text-decoration:underline;
+	background-color: #F8FCFD;
+	vertical-align:middle; 
+	display:table-cell; 
+	text-align: center;
+	margin: 0 auto;	
+}
+.table .x-table-layout-cell .component_btn .x-btn{
+	margin: 0 auto;
+}
+.table .x-table-layout-cell .component .x-btn{
+	margin: 0 auto;
+}
+.table .x-table-layout-cell .component_btn table{
+	border:none;
+}
+.table .x-table-layout-cell .component table{
+	border:none;
+}
+.base_btn button  
+{  
+    width: 56px;
+	height: 24px; 
+}  
+.table .x-table-layout-cell .component .component-bwrap {
+	background-color: #F8FCFD;
+	vertical-align:middle; 
+	display:table-cell; 
+	text-align: center;
+	margin: 0 auto;
+}
+
+.table  .x-form-field-wrap{
+	margin: 0 auto;
+	display: inline-block;
+}
+.table table {
+	border-top: 1px solid #A4A7A9;
+	border-left: 1px solid #A4A7A9;
+}
+
+.table table .x-table-layout-cell{
+	border-right: solid 1px #A4A7A9; 
+	border-bottom: solid 1px #A4A7A9; 
+}
+.required {
+	position:relative;top:4px;width:10px;color:red;font-size:14px;
+}
+
+.table .x-table-layout-cell .component .component-bwrap{
+	text-align: left;
+	font-size: 13px;
+	padding-left: 4px;
+}
+
+.tablePanel .label_center{
+	text-align: center;
+}
+.tablePanel table {
+	border-top: 0px solid #A4A7A9;
+	border-left: 0px solid #A4A7A9;
+}
+
+.tablePanel table .x-table-layout-cell{
+	border-right: solid 0px #A4A7A9; 
+	border-bottom: solid 0px #A4A7A9; 
+}
+
+.tablePanel .x-table-layout-cell{
+	background-color: #D4E1F1;height: 24px;
+}

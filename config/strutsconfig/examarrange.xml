@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="dataprint" namespace="/" extends="struts-default,json-default">
+			<action name="dataprint_*" class="com.jiajie.action.examArrangement.DataPrintAction" method="{1}">
+				<result name="zhunkaozheng">
+					/jsp/dataprint/zhunkaozheng.jsp
+				</result> 
+				<result name="kaoshiricheng">
+					/jsp/dataprint/kaoshiricheng.jsp
+				</result>
+				<result name="kaodianfenbu">
+					/jsp/dataprint/kaodianfenbu.jsp
+				</result>
+				<result name="kaodianjiankao">
+					/jsp/dataprint/kaodianjiankao.jsp
+				</result> 
+				<result name="kaohaoduizhao">
+					/jsp/dataprint/kaohaoduizhao.jsp
+				</result> 
+				<result name="kaoshimenqian">
+					/jsp/dataprint/kaoshimenqian.jsp
+				</result>  
+				<result name="getExamBasicInfo">
+					/jsp/dataprint/examBasicInfo.jsp
+				</result> 
+				<result name="getExamCard">
+					/jsp/dataprint/zhunkaozheng.jsp
+				</result>
+				<result name="getExamSeatInfo">
+					/jsp/dataprint/zuoweitietiao.jsp
+				</result>
+				<result name="getExamSeatInfo_photo">
+					/jsp/dataprint/zuoweitietiao_photo.jsp
+				</result>
+				<result name="examDjInfo">
+					/jsp/dataprint/examDjInfo.jsp
+				</result>
+				<result name="examKsInfo">
+					/jsp/dataprint/examKsInfo.jsp
+				</result> 
+			</action>
+	</package>
+	<package name="examtimearrange" namespace="/" extends="struts-default,json-default">
+			<action name="examtimearrange_*" class="com.jiajie.action.examArrangement.ExamTimeArrangeAction" method="{1}">
+				<result name="goExamTimeArrange">
+					/jsp/examTimeArrange/externaldragdrop.jsp
+				</result>
+			</action>
+	</package>
+	<package name="examteacherarrange" namespace="/" extends="struts-default,json-default">
+			<action name="examteacherarrange_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangeAction" method="{1}">
+			</action>
+			<action name="examteacherarrangeT_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangeTAction" method="{1}">
+			</action>
+			<action name="examteacherarrangeIA_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangeIAAction" method="{1}">
+			</action>
+			<action name="examteacherarrangeP_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangePAction" method="{1}">
+			</action>
+			<action name="examteacherarrangeI_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangeIAction" method="{1}">
+			</action>
+			<action name="examteacherarrangeIAS_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangeIASAction" method="{1}">
+			</action>
+			<action name="examteacherarrangePAS_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangePASAction" method="{1}">
+			</action>
+			<action name="examteacherarrangeHas_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangeHasAction" method="{1}">
+			</action>
+			<action name="examteacherarrangeNone_*" class="com.jiajie.action.examArrangement.ExamTeacherArrangeNoneAction" method="{1}">
+			</action>
+	</package>
+	<package name="examroomarrange" namespace="/" extends="struts-default,json-default">
+			<action name="examroomarrange_*" class="com.jiajie.action.examArrangement.ExamRoomArrangeAction" method="{1}">
+			</action>
+			<action name="examroomarrangeR_*" class="com.jiajie.action.examArrangement.ExamRoomArrangeRAction" method="{1}">
+			</action>
+	</package>
+	<package name="examsiteschool" namespace="/" extends="struts-default,json-default">
+			<action name="examsiteschool_*" class="com.jiajie.action.examArrangement.ExamSiteSchoolAction" method="{1}">
+			</action>
+	</package>
+	<package name="subExamRoomArrange" namespace="/" extends="struts-default,json-default">
+			<action name="subExamRoomArrange_*" class="com.jiajie.action.examArrangement.SubExamRoomArrangeAction" method="{1}">
+				<result name="subExamRoomArrange">
+					/module/examArrangement/examinationDistribution.jsp
+				</result>
+			</action>
+	</package>
+</struts>

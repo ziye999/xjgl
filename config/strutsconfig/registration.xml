@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="registration" namespace="/" extends="struts-default,json-default">
+		<action name="registration_*" class="com.jiajie.action.registration.ExamRegistrationAction" method="{1}">
+		</action>
+		<action name="registrationXs_*" class="com.jiajie.action.registration.ExamRegistrationXsAction" method="{1}">
+		</action>
+		<action name="examstumodify_*" class="com.jiajie.action.registration.ExamStuModifyAction" method="{1}">
+		</action>
+		<action name="examstumodifyIn_*" class="com.jiajie.action.registration.ExamStuModifyInAction" method="{1}">
+		</action>
+		<action name="examstumodifyNo_*" class="com.jiajie.action.registration.ExamStuModifyNoAction" method="{1}">
+		</action>
+	</package>
+	<package name="review" namespace="/" extends="struts-default,json-default">
+		<action name="review_*" class="com.jiajie.action.registration.ExamReviewAction" method="{1}">
+		</action>
+		<action name="reviewXs_*" class="com.jiajie.action.registration.ExamReviewXsAction" method="{1}">
+		</action>
+		<action name="reviewBb_*" class="com.jiajie.action.registration.ExamReviewBbAction" method="{1}">
+		</action>
+		<action name="reviewKs_*" class="com.jiajie.action.registration.ExamReviewKsAction" method="{1}">
+		</action>
+	</package>
+</struts>

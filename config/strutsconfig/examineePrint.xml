@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="examineePrint" namespace="/" extends="struts-default,json-default">
+		<action name="examineePrint_*" class="com.jiajie.action.examineePrint.ExamineePrintAction"  method="{1}">
+			<result name="getExamCard">
+					/jsp/dataprint/zhunkaozheng.jsp
+			</result>
+		</action>
+		<action name="resultsList_*" class="com.jiajie.action.examineePrint.ResultsListAction"  method="{1}">
+		</action>
+	</package>
+
+</struts>

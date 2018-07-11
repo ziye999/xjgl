@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foreignkey-mapping>
+	<foreign name="CUS_KW_BUILDING" comment="楼房信息" isEnable="true">
+		<column name="LF_ID">
+			<table table_name="CUS_KW_ROOM" table_comment="教室信息" id_name="LFID"/>
+		</column>
+	</foreign>
+</foreignkey-mapping>

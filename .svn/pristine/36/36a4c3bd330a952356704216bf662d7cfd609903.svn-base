@@ -1,0 +1,135 @@
+.p-icons-add {
+	background:url(../img/icons/add.gif) no-repeat center left !important;
+}
+.p-icons-delete {
+	background:url(../img/icons/delete.gif) no-repeat center left !important;
+}
+.p-icons-query {
+	background:url(../img/icons/query.gif) no-repeat center left !important;
+}
+.p-icons-operation {
+	background:url(../img/icons/operation.gif) no-repeat center left !important;
+}
+
+.p-icons-clear {
+	background:url(../img/icons/clear.gif) no-repeat center left !important;
+}
+.p-icons-update {
+	background:url(../img/icons/update.gif) no-repeat center left !important;
+}
+
+.p-icons-upload {
+	background:url(../img/icons/upload_local.png) no-repeat center left  !important;
+}
+.p-icons-save {
+	background:url(../img/icons/save.gif) no-repeat center left  !important;
+}
+
+.p-icons-submit {
+	background:url(../img/icons/accept.png) no-repeat center left  !important;
+}
+
+.p-icons-print {
+	background:url(../img/icons/print.gif) no-repeat center left  !important;
+}
+.p-icons-passing {
+	background:url(../img/icons/passing.gif) no-repeat center left  !important;
+}
+
+.p-icons-unpassing {
+	background:url(../img/icons/unpassing.gif) no-repeat center left  !important;
+}
+
+
+.p-icons-checkclose {
+	background:url(../img/icons/checkclose.gif) no-repeat center left  !important;
+}
+
+
+.p-icons-refresh {
+	background:url(../img/icons/refresh.gif) no-repeat center left !important;
+}
+
+.p-icons-page-next {
+	background:url(../img/icons/page-next.gif) no-repeat left  !important;
+}
+
+.p-icons-page-prev {
+	background:url(../img/icons/page-prev.gif) no-repeat left  !important;
+}
+.p-icons-excel {
+	background:url(../img/icons/excel.gif) no-repeat left  !important;
+}
+.p-icons-pdf {
+	background:url(../img/icons/pdf.gif) no-repeat left  !important;
+}
+.p-icons-surcety {
+	background:url(../img/icons/album_share.gif) no-repeat left  !important;
+}
+
+.p-icons-setting{
+	background:url(../img/icons/icon_settings.gif) no-repeat left  !important;
+}
+
+.p-icons-upload{
+	background:url(../img/icons/page_up.gif) no-repeat left  !important;	
+}
+.p-icons-download{
+	background:url(../img/icons/icon_get_world.gif) no-repeat left  !important;		
+}
+
+
+
+.p-icons-female {
+	background:url(../img/icons/user_female.png) no-repeat center !important;
+}
+.p-icons-male {
+	background:url(../img/icons/user_male.png) no-repeat center  !important;
+}
+.p-icons-view {
+	background:url(../img/icons/view.gif) no-repeat left  !important;
+}
+.p-icons-world {
+	background:url(../img/icons/world.png) no-repeat left  !important;
+}
+.p-icons-bullet_blue {
+	background:url(../img/icons/bullet_blue.png) no-repeat left  !important;
+}
+
+
+.p-icons-pserson {
+	background:url(../img/icons/user-workteam.gif) no-repeat center left !important;
+}
+
+<!-- file -->
+
+.p-icons-jpg {
+	background:url(../img/icons/jpg.gif) no-repeat center left !important;
+}
+
+.p-icons-avi {
+	background:url(../img/icons/avi.gif) no-repeat center left !important;
+}
+
+
+.p-icons-heigh {
+	background:url(../img/icons/alert_heigh.gif) no-repeat center left !important;
+}
+
+.p-icons-lower {
+	background:url(../img/icons/alert_lower.gif) no-repeat center left !important;
+}
+
+.p-icons-card {
+	background:url(../img/icons/portlet.gif) no-repeat center left !important;
+}
+
+
+.p-icons-dspoint {
+	background:url(../img/icons/png/record_green.png) no-repeat center left !important;
+}
+
+.p-icons-reply{
+	background:url(../img/icons/reply.png) no-repeat center left !important;
+}
+

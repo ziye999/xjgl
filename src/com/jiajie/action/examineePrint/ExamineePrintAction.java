@@ -1,0 +1,160 @@
+package com.jiajie.action.examineePrint;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
+import com.google.gson.Gson;
+import com.jiajie.action.BaseAction;
+import com.jiajie.bean.MsgBean;
+import com.jiajie.bean.PageBean;
+import com.jiajie.service.core.DropListService;
+import com.jiajie.service.examineePrint.ExamineePrintService;
+import com.jiajie.util.BarCode;
+import com.jiajie.util.PDFReport;
+import com.opensymphony.xwork2.ActionContext;
+
+@SuppressWarnings("all")
+@Controller
+@Scope("prototype")
+public class ExamineePrintAction extends BaseAction{
+	private Map<String, Object> map=new HashMap<String, Object>();
+	private ExamineePrintService examineePrintService;
+	private DropListService dropListService;
+	private List<Map<String, Object>> dataList;
+
+	
+	
+	/**
+	 * 获取准考证信息
+	 * @return
+	 */
+	public String getExamCard(){
+		HttpServletRequest request = getRequest();
+		String xnxq = request.getParameter("xnxq")==null?"":request.getParameter("xnxq").toString();
+		String sfzjh = request.getParameter("sfzjh")==null?"":request.getParameter("sfzjh").toString();
+		String name = request.getParameter("name")==null?"":request.getParameter("name").toString();
+		PageBean pb=examineePrintService.getExamCard(xnxq,sfzjh,name,getBspInfo());
+		dataList = pb.getResultList();
+		return "getExamCard";
+	}
+	
+	public void dayin(){
+		HttpServletRequest request = getRequest();
+		String xnxq = request.getParameter("xnxq")==null?"":request.getParameter("xnxq").toString();
+		writerPrint(examineePrintService.dayinZks(xnxq, getBspInfo()));
+	}
+	
+	
+	
+	/**
+	 * 导出pdf准考证
+	 * @return
+	 * @throws Exception 
+	 */
+	public void getExportPdf() throws Exception{
+		JSONObject json = new JSONObject();
+		json.put("success", true);  
+		HttpServletRequest request = getRequest();
+		String xnxq = request.getParameter("xnxq")==null?"":request.getParameter("xnxq").toString();
+		String sfzjh = request.getParameter("sfzjh")==null?"":request.getParameter("sfzjh").toString();
+		String name = request.getParameter("name")==null?"":request.getParameter("name").toString();
+		PageBean pb=examineePrintService.getExamCard(xnxq,sfzjh,name,getBspInfo());
+		if(pb.getResultList()!=null && pb.getResultList().size()>0){
+			String url = "export"+File.separator+"pdf"+File.separator+"temp"+File.separator+new Date().getTime()+".pdf";
+			String path = request.getSession().getServletContext().getRealPath("/");
+			File f = new File(path+url);
+			f.createNewFile();
+			new PDFReport(f).generatePDF(pb.getResultList(),path);
+			json.put("data", url);
+		}else{
+			json.put("success",false);
+			json.put("msg","没有查询到准考证信息!");
+		} 
+		getResponse().setCharacterEncoding("UTF-8");  
+		getResponse().setContentType("text/html; charset=gbk");
+		getResponse().getWriter().print(json);
+	}
+	
+	/**
+	 * 导出xls
+	 * @return
+	 * @throws Exception 
+	 */
+	public void exportXls() {
+		  try {
+			  HttpServletRequest request = getRequest();
+			  String xnxq = request.getParameter("xnxq")==null?"":request.getParameter("xnxq").toString();
+			  String sfzjh = request.getParameter("sfzjh")==null?"":request.getParameter("sfzjh").toString();
+			  String name = request.getParameter("name")==null?"":request.getParameter("name").toString();
+			  MsgBean mb = examineePrintService.exportXls(xnxq,sfzjh,name,getBspInfo());
+			  HttpServletResponse response = getResponse();
+			  response.setCharacterEncoding("UTF-8");
+			  response.setContentType("text/html; charset=gbk");
+			  response.getWriter().print(new Gson().toJson(mb));
+		  } catch (IOException e) {
+			  e.printStackTrace();
+		  }
+	  }
+
+	public void exporInvoiceXls(){
+		try {
+			HttpServletRequest request = getRequest();
+			String name = request.getParameter("name")==null?"":request.getParameter("name").toString();
+			String state = request.getParameter("state")==null?"":request.getParameter("state").toString();
+			MsgBean mb = examineePrintService.exporInvoiceXls(name,state);
+			HttpServletResponse response = getResponse();
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=gbk");
+			response.getWriter().print(new Gson().toJson(mb));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public Map<String, Object> getMap() {
+		return map;
+	}
+	public void setMap(Map<String, Object> map) {
+		this.map = map;
+	}
+
+	public ExamineePrintService getDataPrintService() {
+		return examineePrintService;
+	}
+	@Resource(name="examineePrintServiceImpl")
+	public void examineePrintService(ExamineePrintService examineePrintService) {
+		this.examineePrintService = examineePrintService;
+	}
+	public DropListService getDropListService() {
+		return dropListService;
+	}
+	@Resource(name="dropListServiceImpl")
+	public void setDropListService(DropListService dropListService) {
+		this.dropListService = dropListService;
+	}
+	public List<Map<String, Object>> getDataList() {
+		return dataList;
+	}
+	public void setDataList(List<Map<String, Object>> dataList) {
+		this.dataList = dataList;
+	}
+
+}

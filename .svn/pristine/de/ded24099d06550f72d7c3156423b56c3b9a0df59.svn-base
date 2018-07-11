@@ -1,0 +1,29 @@
+
+
+.ma_top{width:100%;height:104px;position:relative;background:url(../img/top/top_bg1.jpg) repeat-x left top;}
+.ma_t_l{width:306px;height:104px;position:absolute;left:0px;top:0px;background:url(../img/top/top_left.jpg);}
+.ma_t_r{width:401px;height:104px;position:absolute;right:0px;top:0px;background:url(../img/top/ma_t_r.jpg);}
+
+
+.loginUserIcon {
+	background: #ffffff url(../img/icons/user2.gif) no-repeat right;padding-right:18px;text-decoration:none;
+}
+
+.loginPasswordIcon {
+	background: #ffffff url(../img/icons/updatepassword.gif) no-repeat right;padding-right:18px;text-decoration:none;
+}
+.p-icons-world {
+	background:url(../img/icons/world.png) no-repeat left  !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+

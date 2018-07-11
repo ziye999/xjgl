@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache"> 
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> 
+<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+<title>湖南省行政执法人员执法资格考试自测平台</title>
+<style type="text/css">
+
+*{padding:0;margin:0;font-family:"微软雅黑";font-size:12px;}
+a{text-decoration:none;}
+li{list-style:none;}
+.main_win{width:100%;height:auto;}
+.main_box{width:900px;height:296px;margin:0 auto;background:url(photo/bg.gif) no-repeat;padding-top:35px;}
+img{display:block;border:0;}
+.main_bg{width:456px;height:350px;margin:auto;background:url(photo/bg.png) no-repeat;}
+.main_bg_tit{width:415px;border-bottom:1px dashed #312a49;overflow:hidden;padding-bottom:15px;padding-top:15px;margin:0 auto;}
+.main_bg_tit img{float:left;}
+.main_bg_tit p{float:left;margin-left:10px;}
+.main_bg_ul{width:360px;margin:0 auto;}
+.main_bg_ul li{margin-top:20px;}
+.main_bg_ul li span{font-size:16px;}
+.main_bg_ul li a{font-size:12px;color:#666;text-decoration:none;line-height:26px;}
+.btn{width:236px;margin:0 auto;margin-top:20px;}
+.btn a{display:inline-block;width:86px;height:30px;background:url(photo/load_bg.png);font-size:16px;color:#fff;text-align:center;line-height:30px;}
+.btn_zc{display:inline-block;font-style:normal;width:48px;height:26px;border:1px solid #d2d2d2;background:#fff url(photo/yz_bg.jpg) no-repeat right;border-left:0;font-size:14px;font-style:italic;text-align:center;line-height:26px;}
+
+*,body,html{padding:0px 0px;margin:0px auto;}
+body{background:#ffffff;}
+a img{border:none;}
+.title{height:40px;line-height:40px;font-family:"微软雅黑";font-size:14px;font-weight:bold;color:#333333;text-indent:22px;}
+.search{width:260px;height:30px;}
+.search span{float:left;width:60px;line-height:30px;font-family:"微软雅黑";font-size:14px;color:#333333;}
+.search input{float:left;height:30px;border:none;outline:none;}
+#search{width:220px;height:30px;}
+#search input{width:92px;height:30px;line-height:30px;font-family:"微软雅黑";font-size:14px;background:#c6020a;color:#ffffff;border:none;outline:none;}
+.dhhm{width:254px;height:14px;line-height:14px;font-family:"宋体";font-size:14px;color:#333333;}
+.picbox{position:relative;width:580px;height:180px;overflow:hidden;}
+.picbox_pic{position:relative;width:10000px;height:180px;overflow:hidden;}
+.picbox_pic div{float:left;width:580px;height:180px;display:block;}
+.picbox_point{position:absolute;width:50px;height:6px;bottom:10px;left:265px;}
+.picbox_point div{float:left;width:6px;height:6px;margin:0px 2px;cursor:pointer;}
+.bcolor{background:url(/ksgltest/exam/img/bd.png);}
+.dcolor{background:url(/ksgltest/exam/img/hd.png);}
+.loginbg{width:160px;background:url(/ksgltest/exam/img/user.png);padding-left:37px;}
+.passbg{width:160px;background:url(/ksgltest/exam/img/pswd.png);padding-left:37px;}
+#conte{width:540px;height:210px;line-height:25px;font-family:"宋体";font-size:14px;color:#333333;margin-top:5px;overflow:hidden;}
+#foot{background:#cccccc;margin-top:20px;width:900px;line-height:22px;height:120px;font-family:"宋体";font-size:12px;color:#363636;padding-top:18px;text-align:left;}
+</style>
+<script type="text/javascript" src="/ksgltest/exam/js/todoExam.js"></script>
+<script type="text/javascript">   
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?772081addee3ad8c904d571fe62cb20e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s); 
+})();
+
+ 	function resetForm(){
+ 		$("#xm").val("");
+ 		$("#sfz").val("");
+ 	}
+ 	
+	function query(){     
+		var xm = $("#xm").val();
+		var sfz = $("#sfz").val();
+		if(xm==null || xm==''){
+	 		alert("请输入姓名"); 
+	 		return;
+	 	}
+		if(xm.length<2 || xm.length>4)
+	 	if(sfz==null || sfz==''){
+	 		alert("请输入正确的姓名");
+	 		return;
+	 	} 
+	 	   
+		//if(IdCardValidate(sfz)==false){
+		//	alert("身份证不合法");
+		//	return;
+		//}
+		document.getElementById("loginbtn").disabled=true; 
+ 		$.ajax({ 
+ 			type : 'post',	    
+ 		    dataType : 'text', 
+            url:"queryScore",
+            data:{'xm':xm,'sfz':sfz}, 	        
+ 	        success: function(data) {  
+ 	        	$("#cxform").hide();
+ 	   			$("#xxtp").attr("src",data);
+ 	    		$("#cxjgxs").show();
+ 			} 
+ 		}); 	
+	} 
+	  
+</script>
+</head>
+<body>
+<div style="width:900px;height:180px;background:url(/ksgltest/exam/img/z1.jpg);"></div>
+<div class="main_win">
+     <div class="main_box">
+          <div class="main_bg" id="cxform">
+              <div class="main_bg_tit"><img src="photo/tit.jpg"><p><span style="font-size:20px;">补&nbsp;考&nbsp;成&nbsp;绩&nbsp;查&nbsp;询</span><br>SCORES QUERY</p></div>
+              <ul class="main_bg_ul">
+              	  <li><span>&nbsp;&nbsp;&nbsp;姓名：</span><input style="width:186px;height:26px;border:1px solid #d2d2d2;" id="xm" type="text"></li>
+                  <li><span>证件号：</span><input style="width:186px;height:26px;border:1px solid #d2d2d2;" type="text" id="sfz"></li>
+              </ul>
+              <div class="btn"><input type="button" value="  查　    询   " onclick="query()" id="loginbtn"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="  重   　置   " onclick="resetForm()"/></div>
+          </div> 
+          <div class="main_bg" id="cxjgxs" style="display: none;">
+              <div class="main_bg_tit"><img src="photo/tit.jpg"><p><span style="font-size:20px;">成&nbsp;绩&nbsp;查&nbsp;询</span><br>SCORES QUERY</p></div>
+	          <img alt="" src="" id="xxtp" style="border-color: black;border: 1px;">
+          </div> 
+     </div>
+</div>
+  <table id="foot" > 
+  		<tr>
+  		<td style="padding-left: 350px;">主办： 湖南省人民政府法制办公室</td>
+  	</tr>
+  	<tr>
+  		<td style="padding-left: 350px;">承办：湖南广播电视大学</td>
+  	</tr> 
+  	<tr>
+  		<td style="padding-left: 350px;">技术支持： 湖南省嘉杰信息技术有限公司</td>
+  	</tr>
+  	<tr>
+  		<td style="padding-left: 350px;">域名备案信息：湘ICP备09005180号</td>
+  	</tr> 
+  </table>
+<script type="text/javascript" src="/ksgltest/exam/js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript"> 
+function autoPlay(){
+  var len = $(".picbox_point div").length;
+  var wid = $(".picbox_pic div").eq(0).width();
+  var index = $(".picbox_point .dcolor").index(".picbox_point div");
+  var on  = index+1 < len ? index+1 : 0;
+  var pwidth = parseInt(on*wid);
+  $(".picbox_point div").eq(on).addClass("dcolor").siblings().removeClass("dcolor");
+  $(".picbox_pic").stop().animate({left:-pwidth},500);
+};
+function stay(obj){
+  var len = $(".picbox_point div").length;
+  var wid = $(".picbox_pic div").eq(0).width();
+  var index = $(obj).index(".picbox_point div");
+  var on = index < len ? index : 0;
+  var pwidth = parseInt(on*wid);
+  $(obj).addClass("dcolor").siblings().removeClass("dcolor");
+  $(".picbox_pic").stop().animate({left:-pwidth},500);		
+};
+
+var Wi = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 ];    // 加权因子   
+var ValideCode = [ 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2 ];            // 身份证验证位值.10代表X   
+function IdCardValidate(idCard) { 
+    idCard = trim(idCard.replace(/ /g, ""));               //去掉字符串头尾空格                     
+    if (idCard.length == 15) {   
+        return isValidityBrithBy15IdCard(idCard);       //进行15位身份证的验证    
+    } else if (idCard.length == 18) {   
+        var a_idCard = idCard.split("");                // 得到身份证数组   
+        if(isValidityBrithBy18IdCard(idCard)&&isTrueValidateCodeBy18IdCard(a_idCard)){   //进行18位身份证的基本验证和第18位的验证
+            return true;   
+        }else {   
+            return false;   
+        }   
+    } else {   
+        return false;   
+    }   
+}   
+/**  
+ * 判断身份证号码为18位时最后的验证位是否正确  
+ * @param a_idCard 身份证号码数组  
+ * @return  
+ */  
+function isTrueValidateCodeBy18IdCard(a_idCard) {   
+    var sum = 0;                             // 声明加权求和变量   
+    if (a_idCard[17].toLowerCase() == 'x') {   
+        a_idCard[17] = 10;                    // 将最后位为x的验证码替换为10方便后续操作   
+    }   
+    for ( var i = 0; i < 17; i++) {   
+        sum += Wi[i] * a_idCard[i];            // 加权求和   
+    }   
+    valCodePosition = sum % 11;                // 得到验证码所位置   
+    if (a_idCard[17] == ValideCode[valCodePosition]) {   
+        return true;   
+    } else {   
+        return false;   
+    }   
+}   
+/**  
+  * 验证18位数身份证号码中的生日是否是有效生日  
+  * @param idCard 18位书身份证字符串  
+  * @return  
+  */  
+function isValidityBrithBy18IdCard(idCard18){   
+    var year =  idCard18.substring(6,10);   
+    var month = idCard18.substring(10,12);   
+    var day = idCard18.substring(12,14);   
+    var temp_date = new Date(year,parseFloat(month)-1,parseFloat(day));   
+    // 这里用getFullYear()获取年份，避免千年虫问题   
+    if(temp_date.getFullYear()!=parseFloat(year)   
+          ||temp_date.getMonth()!=parseFloat(month)-1   
+          ||temp_date.getDate()!=parseFloat(day)){   
+            return false;   
+    }else{   
+        return true;   
+    }   
+}   
+  /**  
+   * 验证15位数身份证号码中的生日是否是有效生日  
+   * @param idCard15 15位书身份证字符串  
+   * @return  
+   */  
+  function isValidityBrithBy15IdCard(idCard15){   
+      var year =  idCard15.substring(6,8);   
+      var month = idCard15.substring(8,10);   
+      var day = idCard15.substring(10,12);   
+      var temp_date = new Date(year,parseFloat(month)-1,parseFloat(day));   
+      // 对于老身份证中的你年龄则不需考虑千年虫问题而使用getYear()方法   
+      if(temp_date.getYear()!=parseFloat(year)   
+              ||temp_date.getMonth()!=parseFloat(month)-1   
+              ||temp_date.getDate()!=parseFloat(day)){   
+                return false;   
+        }else{   
+            return true;   
+        }   
+  }   
+  //去掉字符串头尾空格   
+function trim(str) {   
+    return str.replace(/(^\s*)|(\s*$)/g, "");   
+}  
+</script> 
+</body> 
+</html>

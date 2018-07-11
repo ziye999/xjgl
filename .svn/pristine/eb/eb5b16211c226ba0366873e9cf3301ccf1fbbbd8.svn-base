@@ -1,0 +1,28 @@
+@charset "gb2312";
+/* CSS Document */
+
+@import url("layout.css");
+/*_____________________准考证____________________*/
+body{ height:100%}
+.pop_cont{width:1000px; height:500px;overflow:hidden; margin:0 auto;  }
+.wrong{ width:440px; height:268px;margin:0 10px; float:left; border:1px solid #666; padding:0 20px;}
+.wrong h2{ display:block; width:440px; height:50px; line-height:50px; color:#333; text-align:center; font-size:28px;font-weight:normal; }
+.wrong span img{ float:left; width:130px; height:150px; margin-right:15px;}
+.wrong font{ display:block; width:440px; text-align:center;}
+.wrong p{font-size:14px;margin:0 auto; text-align:left; line-height:26px; color:#333 }
+.wrong p em{ background:#ccc;}
+
+/*__________________考生须知____________________*/
+.wrongs{ width:440px; height:268px;margin:0; float:left; border:1px solid #666; padding:0 20px;}
+.wrongs h2{ display:block; width:440px; height:50px; line-height:50px; color:#333; text-align:center; font-size:28px;font-weight:normal; }
+.wrongs p{font-size:16px;margin:0 auto; text-align:left; line-height:32px; color:#333; text-indent:2em; padding:0 5px; }
+
+
+
+
+
+
+
+
+
+

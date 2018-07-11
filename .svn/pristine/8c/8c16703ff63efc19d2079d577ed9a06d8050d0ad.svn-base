@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.jiajie.bean.exambasic.ExamInfo" table="EXAM_INFO">
+		<id name="exam_info_id" type="java.lang.String"> 
+			<generator class="uuid" />
+		</id> 
+		<property name="exam_type_id" type="string" /> 
+		<property name="scores" type="string" />
+		<property name="exam_info_bh" type="string" />  
+		<property name="exam_cont" type="string" /> 
+		<set name="opts" order-by="exam_bh" lazy="false">
+			<key column="exam_info_id" />  
+            <one-to-many class="com.jiajie.bean.exambasic.ExamInfoOpt"/>  
+		</set>
+	</class>
+</hibernate-mapping>

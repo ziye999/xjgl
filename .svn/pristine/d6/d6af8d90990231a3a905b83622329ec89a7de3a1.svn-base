@@ -1,0 +1,24 @@
+package com.jiajie.service.signup;
+
+import com.jiajie.bean.MsgBean;
+import com.jiajie.bean.PageBean;
+import com.jiajie.util.bean.MBspInfo;
+
+public interface BmshService {
+	//根据条件查询单位，成绩,年度，轮次
+	public PageBean getList(String xn,MBspInfo mbf,String mc,String ckdw,String zkdw,String fpzt);
+	
+	
+	public MsgBean getObject(String bmlcid);
+	
+	public MsgBean up(String bmlcid);
+	
+	public MsgBean btg(String bmlcid,String sh);
+	
+	public MsgBean updateZt(String bmlcid);
+	
+	public MsgBean updateBm(String bmlcid);
+	
+	public  MsgBean dxsl();
+	
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="sqck" namespace="/" extends="struts-default,json-default">
+		<action name="sqAction_*" class="com.jiajie.action.sqck.SqckAction" method="{1}">
+				<result type= "chain" name="success">
+					sc
+				</result>
+			</action>
+			<action name="sq_*" class="com.jiajie.action.sqck.SqckAction" method="{1}">
+			</action>	
+			
+		<action name="sc" class="com.jiajie.action.sqck.SqckAction" method="getList">
+			<result name="sqck">
+					/sqck.jsp
+				</result>
+			</action>
+				
+	</package>
+</struts>

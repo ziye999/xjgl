@@ -1,0 +1,30 @@
+body{ font-family:"΢���ź�"; padding:0; margin:0 auto; background:#fafafa;}
+.top{ background:#fff; height:60px; width:100%;}
+.head{ width:1000px; margin:0 auto;}
+.logo{color:#333333; font-size:22px; float:left; height:60px; line-height:50px; font-weight:normal;}
+.lologo{ margin:6px;border:0;padding:0;color:#FF0000; font-size:20px; text-align:center; height:20px; line-height:50px; font-weight:800;}
+.under{ margin:6px;border:0;padding:0;color:#FF0000; font-size:20px; text-align:center; height:20px; line-height:150px; font-weight:800;}
+.logogo{ margin:3px;border:0;padding:0;color:#FF0000; font-size:15px; float:right; height:20px; line-height:15px; font-weight:normal;}
+.banner{ background:url(../img/dl_bg.jpg) no-repeat center center #19b1fd; height:377px; text-align:center;}
+.denglu{ background:url(../img/dlk.png) no-repeat center center; width:454px; height:420px; margin:0 auto; position:relative; bottom:-80px;}
+
+.dl_mm{ width:255px; margin: 0 auto; padding-top:50px; overflow:hidden}
+.dl{ width:100%; margin-top:20px;border:1px solid #e5e5e5;-moz-border-radius:5px;-webkit-border-radius:5px; border-radius:5px;  height:36px;}
+.dl_l{ float:left; width:33px; text-align:center; padding-top:10px;}
+.dl_c{ float:left;  height:36px; line-height:36px; }
+.dl_c input{ height:34px; line-height:34px; border:0; width:200px;}
+.mm{ width:100%; margin-top:20px;border:1px solid #e5e5e5;-moz-border-radius:5px;-webkit-border-radius:5px; border-radius:5px; height:36px;}
+.mm_l{float:left; width:33px; text-align:center; padding-top:10px;}
+.mm_c{ float:left;  height:36px; line-height:36px; }
+.mm_c input{height:34px; line-height:34px; border:0; width:200px;}
+
+
+.yzm{ width:100%; margin-top:20px; height:36px;}
+.yzm_l{ float:left; width:130px;border:1px solid #e5e5e5;-moz-border-radius:5px;-webkit-border-radius:5px; border-radius:5px; height:36px; line-height:36px; }
+.yzm_l input{ text-indent:15px; eight:34px; line-height:34px; border:0; width:120px; -moz-border-radius:5px;-webkit-border-radius:5px; border-radius:5px;}
+.yzm_c{ float: right; color:#1a4bb4;  width:100px;border:1px solid #e5e5e5;-moz-border-radius:5px;-webkit-border-radius:5px; border-radius:5px; height:36px;  line-height:36px; text-align:center;}
+.dl_an{ width:250px; height:36px; background:#faa600; text-align:center; line-height:36px; color:#fff; font-size:32px; margin-top:10px; -moz-border-radius:5px;-webkit-border-radius:5px; border-radius:5px;}
+.dl_an a{ display:block; color:#fff; font-size:16px; text-decoration:none; }
+.dl_an a:hover{ background:#36a5ff;  -moz-border-radius:5px;-webkit-border-radius:5px; border-radius:5px;}
+.wj { text-align:center;  padding-top:10px;}
+.wj a{ color:#fff; font-size:16px; text-decoration:none; text-align:center;}

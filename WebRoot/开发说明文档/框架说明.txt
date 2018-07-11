@@ -1,0 +1,32 @@
+前台新增功能步骤
+1.module/模块名/  添加功能js
+2.js/util/MenuInfo.js中添加菜单。
+3.在浏览器地址中输入http://项目地址/xjgl/jsp/main.jsp?module=000101 测试
+
+分页
+需要做分页的查询请将action中的查询方法名命名以Page结尾
+参考BuildingAction
+
+数据字典下拉
+实例化一个DictCombox控件new Ext.ux.DictCombox({dictCode:"ZD_XB", width:100});
+dictCode为数据字典表名，将控件添加到页面
+其他下拉，新建控件new Ext.ux.Combox({dropAction:"【方法名】", width:100});
+然后在后台的DropListAction里添加下拉方法
+
+用户信息
+前台获取用户信息
+mBspInfo.getUserId()  用户id
+mBspInfo.getUserName() 用户名 
+mBspInfo.getUserType() 用户类型 1为组考单位，2为参考单位
+mBspInfo.getOrganCode() 机构代码
+mBspInfo.getOrganName() 机构名称
+
+删除
+如果你的表引用了其他表的数据，存在主外键关系，请在config\foreignkey.xml中配置一下你的主外键关系。
+可以参考:
+&ltforeign name="CUS_KW_BUILDING" comment="楼房信息" isEnable="true"> 
+	&nbsp;&nbsp;&ltcolumn name="LF_ID">  
+		&nbsp;&nbsp;&nbsp;&nbsp;&lttable table_name="CUS_KW_ROOM" table_comment="教室信息" id_name="LFID"/> 
+	&nbsp;&nbsp;&lt/column>
+&lt/foreign>
+ForeignBean  ForeignColumnBean ForeignTableBean

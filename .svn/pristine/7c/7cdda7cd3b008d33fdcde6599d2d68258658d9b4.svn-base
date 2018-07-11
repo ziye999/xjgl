@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+        "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+    <package name="statistics" namespace="/" extends="struts-default,json-default">
+        <action name="statistics_*" class="com.jiajie.action.statistics.ComMemsOrganAction"  method="{1}">
+        </action>
+
+
+    </package>
+
+</struts>

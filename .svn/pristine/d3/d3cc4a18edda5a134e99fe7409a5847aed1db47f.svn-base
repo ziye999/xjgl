@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="applyForStudy" namespace="/" extends="struts-default,json-default">
+		<action name="applyForStudy_*" class="com.jiajie.action.dailyManagement.ApplyForStudyAction" method="{1}">
+		</action>
+	</package>
+	<package name="generateRollCode" namespace="/" extends="struts-default,json-default">
+		<action name="generateRollCode_*" class="com.jiajie.action.dailyManagement.GenerateRollCodeAction" method="{1}">
+		</action>
+	</package>
+</struts>

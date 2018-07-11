@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<include file="strutsconfig/basicsinfo.xml"></include>
+	<include file="strutsconfig/exambasic.xml"></include>
+	<include file="strutsconfig/registration.xml"></include>
+	<include file="strutsconfig/examarrange.xml"></include>
+	<include file="strutsconfig/resultsstatisticalcollection.xml"></include>
+	<include file="strutsconfig/cheatStu.xml"></include>
+	<include file="strutsconfig/examResults.xml"></include>
+	<include file="strutsconfig/gradeAmendment.xml"></include>
+	<include file="strutsconfig/scoreModify.xml"></include>
+	<include file="strutsconfig/scoreStu.xml"></include>
+	<include file="strutsconfig/dailyManagement.xml"></include>
+	<include file="strutsconfig/dailyManage.xml"></include>
+	<include file="strutsconfig/rollReport.xml"></include>
+	<include file="strutsconfig/photo.xml"></include>
+	<include file="strutsconfig/academicGrade.xml"></include>
+	<include file="strutsconfig/integratedQuery.xml"></include>
+	<include file="strutsconfig/reportprint.xml"></include>
+	<include file="strutsconfig/sysManagement.xml"></include>
+	<include file="strutsconfig/userRole.xml"></include>
+	<include file="strutsconfig/zzjg.xml"></include>
+	<include file="strutsconfig/registrationSystem.xml"></include>
+	<include file="strutsconfig/signup.xml"></include>
+	<include file="strutsconfig/examineePrint.xml"></include>
+	<include file="strutsconfig/statistics.xml"></include>
+		<include file="strutsconfig/sqck.xml"></include>
+	<!-- 配置为开发模式 -->
+    <constant name="struts.devMode" value="true" />
+    <!-- 把action扩展名改为.do -->
+    <constant name="struts.action.extension" value="do" />
+    <!-- 把主题设为simple -->
+    <constant name="struts.ui.theme" value="simple" />
+   												  
+    <constant name="struts.multipart.maxSize" value="200000000" />
+
+	<package name="core" namespace="/" extends="struts-default,json-default">
+			<action name="messageBoxAction_*" class="com.jiajie.action.core.MessageBoxAction" method="{1}">
+			</action>
+			<action name="excelAction_*" class="com.jiajie.action.core.ExcelAction" method="{1}">
+			</action>
+			<action name="pdfAction_*" class="com.jiajie.action.core.PdfAction" method="{1}">
+			</action>
+			<action name="dropListAction_*" class="com.jiajie.action.core.DropListAction" method="{1}">
+			</action>
+			<action name="upfile_*" class="com.jiajie.action.core.UpFileAction" method="{1}">
+	            <interceptor-ref name="defaultStack"></interceptor-ref>	            
+			</action>
+			<action name="adminTree_*" class="com.jiajie.action.core.AdminTreeAction" method="{1}">
+			</action>
+			<action name="userinfo_*" class="com.jiajie.action.core.UserInfoAction" method="{1}">
+			</action>
+			<action name="systemModuleAction_*" class="com.jiajie.action.core.SystemModuleAction" method="{1}">
+			</action>
+			<action name="loginAction_*" class="com.jiajie.action.core.LoginAction" method="{1}">
+				<result name="forward">
+					/forward.jsp
+				</result>
+				<result name="main">
+					/jsp/main.jsp
+				</result>
+				<result name="login">
+					/login.jsp
+				</result>
+			</action>
+			
+			
+			<action name="logoutAction_*" class="com.jiajie.action.core.LogoutAction" method="{1}">
+        	</action> 
+			<action name="controlCenter" class="controlCenterAction">  
+	            <result name="controlcenter">/ControlCenter.jsp</result>  
+	        </action> 
+	        
+	       			
+	</package>
+</struts>

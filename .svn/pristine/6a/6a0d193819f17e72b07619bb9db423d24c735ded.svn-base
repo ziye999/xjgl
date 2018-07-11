@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Portal Layout Sample</title>
+
+	<link href="../css/ext-theme-classic-all.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="portal.css" />
+    <!-- GC -->
+
+    <!-- <x-compile> -->
+
+    <!-- <x-bootstrap> -->
+   <script src="../js/ext-all-debug-w-comments.js" type="text/javascript"></script>
+    
+    <script src="../js/ext-lang-zh_CN.js" type="text/javascript"></script>
+    <!-- </x-bootstrap> -->
+
+    <!-- shared example code -->
+    <script type="text/javascript" src="./classes/examples.js"></script>
+
+    <script type="text/javascript">
+        Ext.Loader.setPath('Ext.app', 'classes');
+    </script>
+    <script type="text/javascript" src="portal.js"></script>
+    <script type="text/javascript">
+        Ext.require([
+            'Ext.layout.container.*',
+            'Ext.resizer.Splitter',
+            'Ext.fx.target.Element',
+            'Ext.fx.target.Component',
+            'Ext.window.Window',
+            'Ext.app.Portlet',
+            'Ext.app.PortalPanel',
+            'Ext.app.PortalDropZone',
+            'Ext.app.KsStore'
+        ]);
+        
+		var resultMap = new Ext.util.HashMap();
+		
+        Ext.onReady(function(){
+	        
+        	var portal = Ext.create('Ext.app.Portal');
+        });
+        
+    </script>
+    <!-- </x-compile> -->
+</head>
+<body>
+    <span id="app-msg" style="display:none;"></span>
+</body>
+</html>

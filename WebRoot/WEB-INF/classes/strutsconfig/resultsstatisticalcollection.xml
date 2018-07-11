@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="resultsstatisticalcollection" namespace="/" extends="struts-default,json-default">
+		<action name="resultscollection_*" class="com.jiajie.action.resultsStatisticalCollection.ResultsCollectionAction" method="{1}">
+		</action>
+	</package>
+	<package name="setstandard" namespace="/" extends="struts-default,json-default">
+		<action name="setstandard_*" class="com.jiajie.action.resultsStatisticalCollection.SetStandardAction" method="{1}">
+		</action>
+	</package>
+	<package name="statistical" namespace="/" extends="struts-default,json-default">
+		<action name="resultsStatistical_*" class="com.jiajie.action.resultsStatisticalCollection.ResultsStatisticalAction" method="{1}">
+			<result name="printDataForLC_yxl">/module/resultsStatisticalCollection/jsp/yxl/printDataForLC_yxl.jsp</result>
+			<result name="printDataForLC_hgl">/module/resultsStatisticalCollection/jsp/hgl/printDataForLC_hgl.jsp</result>
+			<result name="printDataForLC_pjf">/module/resultsStatisticalCollection/jsp/pjf/printDataForLC_pjf.jsp</result>
+			<result name="printDataForLC_zgf_zdf">/module/resultsStatisticalCollection/jsp/zgf/printDataForLC_zgf_zdf.jsp</result>
+			<result name="printDataForLC_pjfbzc">/module/resultsStatisticalCollection/jsp/pjfbzc/printDataForLC_pjfbzc.jsp</result>
+			<result name="printDataForLC_gkksjbqk">/module/resultsStatisticalCollection/jsp/gkksjbqk/printDataForLC_gkksjbqk.jsp</result>
+				
+			<result name="printDataForXX_yxl">/module/resultsStatisticalCollection/jsp/yxl/printDataForXX_yxl.jsp</result>
+			<result name="printDataForXX_hgl">/module/resultsStatisticalCollection/jsp/hgl/printDataForXX_hgl.jsp</result>
+			<result name="printDataForXX_pjf">/module/resultsStatisticalCollection/jsp/pjf/printDataForXX_pjf.jsp</result>
+			<result name="printDataForXX_zgf_zdf">/module/resultsStatisticalCollection/jsp/zgf/printDataForXX_zgf_zdf.jsp</result>
+			<result name="printDataForXX_pjfbzc">/module/resultsStatisticalCollection/jsp/pjfbzc/printDataForXX_pjfbzc.jsp</result>
+			<result name="printDataForXX_gkksjbqk">/module/resultsStatisticalCollection/jsp/gkksjbqk/printDataForXX_gkksjbqk.jsp</result>
+				
+			<result name="printDataForNJ_yxl">/module/resultsStatisticalCollection/jsp/yxl/printDataForNJ_yxl.jsp</result>
+			<result name="printDataForNJ_hgl">/module/resultsStatisticalCollection/jsp/hgl/printDataForNJ_hgl.jsp</result>
+			<result name="printDataForNJ_pjf">/module/resultsStatisticalCollection/jsp/pjf/printDataForNJ_pjf.jsp</result>
+			<result name="printDataForNJ_zgf_zdf">/module/resultsStatisticalCollection/jsp/zgf/printDataForNJ_zgf_zdf.jsp</result>
+			<result name="printDataForNJ_pjfbzc">/module/resultsStatisticalCollection/jsp/pjfbzc/printDataForNJ_pjfbzc.jsp</result>
+			<result name="printDataForNJ_gkksjbqk">/module/resultsStatisticalCollection/jsp/gkksjbqk/printDataForNJ_gkksjbqk.jsp</result>
+								
+			<result name="printDataForBJ_yxl">/module/resultsStatisticalCollection/jsp/yxl/printDataForBJ_yxl.jsp</result>
+			<result name="printDataForBJ_hgl">/module/resultsStatisticalCollection/jsp/hgl/printDataForBJ_hgl.jsp</result>
+			<result name="printDataForBJ_pjf">/module/resultsStatisticalCollection/jsp/pjf/printDataForBJ_pjf.jsp</result>
+			<result name="printDataForBJ_zgf_zdf">/module/resultsStatisticalCollection/jsp/zgf/printDataForBJ_zgf_zdf.jsp</result>
+			<result name="printDataForBJ_pjfbzc">/module/resultsStatisticalCollection/jsp/pjfbzc/printDataForBJ_pjfbzc.jsp</result>
+			<result name="printDataForBJ_gkksjbqk">/module/resultsStatisticalCollection/jsp/gkksjbqk/printDataForBJ_gkksjbqk.jsp</result>
+		</action>
+	</package>
+</struts>

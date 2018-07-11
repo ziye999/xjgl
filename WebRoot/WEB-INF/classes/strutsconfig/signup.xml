@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="signup" namespace="/" extends="struts-default,json-default">
+		<action name="sign_*" class="com.jiajie.action.signup.SignUpAction"  method="{1}">
+		</action>
+		
+		<action name="signup_*" class="com.jiajie.action.signup.ManagementAction"  method="{1}">
+		</action>
+		
+		<action name="bmsh_*" class="com.jiajie.action.signup.BmshAction"  method="{1}">
+		</action>
+		<action name="upload_*" class="com.jiajie.action.signup.uploadCertificateAction"  method="{1}">
+		</action>
+		<action name="uploadinfor_*" class="com.jiajie.action.signup.uploadInformationAction"  method="{1}">
+		</action>
+		<action name="cj_*" class="com.jiajie.action.signup.CjdcAction"  method="{1}">
+		</action>
+	</package>
+
+</struts>

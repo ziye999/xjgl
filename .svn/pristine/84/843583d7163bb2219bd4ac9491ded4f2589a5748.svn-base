@@ -1,0 +1,35 @@
+body,input{ padding:0; margin:0; font-family:"΢���ź�";border:none;}
+body{ margin:0 auto; padding:40px 0; }
+ul, li, a, input, h3, p, img {list-style: none;margin: 0;padding: 0; text-decoration: none;font-style: normal; font-weight: normal;border: none;}
+.zj{float-right:-30px;}
+.main{ background:#fff;; margin:0 auto; width:670px;padding-left:-90px;}
+.main_bt{margin:0 auto; padding:30px 0 20px 0; text-align:center; }
+.main_nr{margin:0 auto; padding:30px 0; color:#128dea; font-size:124px;  width:670px;}
+.main span{ float:left;}
+.mt52{margin-top:52px;}
+.talk{ background:#99999;height:480px;width:174px;text-align: center;border:1px solid #ebebeb; float:right; margin-top:-350px;}
+.talk_nr { background: #fff; padding: 10px;float:left;}
+.talk_nr p {color: #cc4d56;font-size: 14px;float:left;}
+.talk_nr h3 { color: #12267d;font-size:13px;padding-top:13px;float:left;}
+
+.qq_nr_kf {color: #393939;font-size: 14px;float:left;margin-left:10px;margin-top:10px;}
+.qq_nr_ts {color: #cc4d56;font-size: 12px;float:left;margin-left:10px; margin-top:5px;}
+.qq_nr_zy p{font-weight:bold;color: #cc4d56;font-size: 12px;float:left;margin-left:10px; margin-top:5px;}
+.qq_nr_zy1 p{font-weight:bold;color: #cc4d56;font-size: 12px;float:left;margin-left:10px; margin-top:2px;}
+
+
+.qq_nr_kf1 {color: #393939;font-size: 14px;float:left;width:87px;}
+.qq_nr_ts2 {color: #cc4d56;font-size: 12px;float:left;width:87px;}
+
+.xt img{width:174px;margin-top:10px;text-align: center;}
+.jfzh{ background:#99999;height:300px;width:191px;text-align: center;border:1px solid #ebebeb; float-right:240px; margin-left:0px; position:absolute; left:0px;top:165px;}
+.jfzh_nr { background: #fff; padding: 10px;float:left;padding-left:260px;}
+.skdwxx {color:#12267d;font-size: 14px;float:left;margin-left:-10px; margin-top:-10px;}
+.skdw {color: #393939;font-size: 12px;float:left;margin-left:10px; margin-top:5px;}
+.khx {color: #393939;font-size: 12px;float:left;margin-left:10px; margin-top:5px;}
+.khx1 {color:#393939;font-size: 12px;float:left;margin-left:10px; margin-top:5px;}
+.zh {color: #12267d;font-size: 14px;float:left;margin-left:2px; margin-top:-5px;}
+.sz {color:#393939;font-size: 12px;float:left;margin-left:10px; margin-top:-5px;}
+.fks {color:#12267d;font-size: 14px;float:left;margin-left:10px; margin-top:5px;}
+.fks1 {color: #cc4d56;font-size: 12px;float:left;margin-left:10px; margin-top:5px;}
+.fks2 {color: #cc4d56;font-size: 12px;float:left;margin-left:10px; margin-top:3px;}

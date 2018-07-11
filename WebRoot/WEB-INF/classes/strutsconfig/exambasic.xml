@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="exambasic" namespace="/" extends="struts-default,json-default">
+			<action name="examround_*" class="com.jiajie.action.exambasic.ExamRoundAction" method="{1}">
+			</action>
+			<action name="examsubject_*" class="examSubjectAction" method="{1}">
+			</action>
+			<action name="examInfomation_*" class="com.jiajie.action.exambasic.ExamInfomationAction" method="{1}">
+				<result name="printData">
+	            	/module/exambasic/examInfomation_check.jsp
+	            </result>
+	            <result name="examInfo">
+	            	/module/exambasic/examInfomationCount_examInfo.jsp
+	            </result>
+	            <result name="count">
+	            	/module/exambasic/examInfomationCount_count.jsp
+	            </result> 
+			</action>
+			<action name="examSchoolArrange_*" class="com.jiajie.action.examArrangement.ExamSchoolArrangeAction" method="{1}"></action>
+			<action name="examSchoolArrangeSt_*" class="com.jiajie.action.examArrangement.ExamSchoolArrangeStAction" method="{1}"></action>
+			<action name="examSchoolArrangeXs_*" class="com.jiajie.action.examArrangement.ExamSchoolArrangeXsAction" method="{1}"></action>
+			<action name="examst_*" class="com.jiajie.action.exambasic.ExamstAction" method="{1}"></action>
+			<action name="examzj_*" class="com.jiajie.action.exambasic.ExamzjAction" method="{1}">
+				<result name="previewExamInfo">
+	            	/module/exambasic/previewExamInfo.jsp
+	            </result>
+			</action>
+			<action name="exam_*" class="com.jiajie.action.exambasic.ExamAction" method="{1}">
+				<result name="previewExamInfo">
+	            	/module/exambasic/previewExamInfo.jsp
+	            </result>
+			</action>
+	</package>
+</struts>

@@ -1,0 +1,40 @@
+mysql.driverClassName = com.mysql.jdbc.Driver
+
+mysql.url = jdbc\:mysql\://10.1.17.59\:3306/test?useUnicode\=true&characterEncoding\=utf-8&useOldAliasMetadataBehavior\=true&zeroDateTimeBehavior\=convertToNull&autoReconnect\=true
+
+#mysql.url = jdbc\:mysql\://127.0.0.1\:3306/zfks?useUnicode\=true&characterEncoding\=utf-8&useOldAliasMetadataBehavior\=true&zeroDateTimeBehavior\=convertToNull&autoReconnect\=true
+
+mysql.username = root
+mysql.password = root
+#mysql.password =
+
+
+#jdbc.driverclass=com.mysql.jdbc.Driver
+#jdbc.url=jdbc:mysql://mysql.kaoshi.worldve.com:3306/ksgl?useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&jdbcCompliantTruncation=false&noAccessToProcedureBodies=true
+#jdbc.username=ksgl
+#jdbc.password=ka0s!9l 
+#mysql.driverClassName = com.mysql.jdbc.Driver
+#mysql.url = jdbc:mysql://42.48.115.160:6033/ksgl?useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+#mysql.username = root
+#mysql.password = hnjj#2016
+#mysql.driverClassName = com.mysql.jdbc.Driver
+#mysql.url = jdbc:mysql://172.16.6.242:3306/hxgc?useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+#mysql.username = root
+#mysql.password = !mr00t
+
+druid.initialSize = 50
+druid.maxActive = 5000
+druid.maxIdle = 80
+druid.minIdle = 15
+druid.maxWait = 60000
+druid.removeAbandoned = true
+druid.removeAbandonedTimeout = 14400
+druid.timeBetweenEvictionRunsMillis = 60000
+druid.minEvictableIdleTimeMillis = 300000
+druid.validationQuery = SELECT 1 FROM DUAL
+druid.testWhileIdle = true 
+druid.testOnBorrow = false
+druid.testOnReturn = false
+druid.poolPreparedStatements = true
+druid.maxPoolPreparedStatementPerConnectionSize = 50
+druid.filters =stat

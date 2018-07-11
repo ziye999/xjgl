@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="rollReport" namespace="/" extends="struts-default,json-default">
+		<action name="rollCard_*" class="com.jiajie.action.rollReport.RollCardAction" method="{1}">
+			<result name="rollCard">
+				/module/rollReport/rollCardPrint.jsp
+	       	</result>
+	        <result name="studentRoster">
+				/module/rollReport/studentRosterPrint.jsp
+	      	</result>  
+	        <result name="picPrint">
+				/module/rollReport/picPrint.jsp
+	     	</result>  
+		</action>
+		<action name="certificatePrint_*" class="com.jiajie.action.rollReport.CertificatePrintAction" method="{1}">
+			<result name="certificatePrint">
+				/module/rollReport/certificatePrint.jsp
+	        </result>
+		</action>
+	</package>
+</struts>

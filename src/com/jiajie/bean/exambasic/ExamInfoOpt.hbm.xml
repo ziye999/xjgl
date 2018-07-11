@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.jiajie.bean.exambasic.ExamInfoOpt" table="EXAM_INFO_OPT">
+		<id name="exam_opt_id" type="string" >
+			<generator class="uuid" />
+		</id>  
+		<property name="exam_bh" type="string" />  
+		<property name="exam_info_id" type="string" /> 
+		<property name="exam_opt_des" type="string" />
+	</class>
+</hibernate-mapping>

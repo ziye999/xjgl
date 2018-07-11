@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">    
+    <title>身份证阅读器接入页面</title>
+    <script type="text/javascript">
+        function toJson(str) {
+            return eval('(' + str + ')');
+        }
+        function clearForm() {
+            document.getElementById("partyName").value = "";
+            document.getElementById("gender").value = "";
+            //document.getElementById("nation").value = "";
+            //document.getElementById("bornDay").value = "";
+            //document.getElementById("certAddress").value = "";
+            document.getElementById("certNumber").value = "";
+            //document.getElementById("certOrg").value = "";
+            document.getElementById("effDate").value = "";
+            document.getElementById("expDate").value = "";
+            document.getElementById("handjpg").src = "";
+            PicFront.src = "";
+            //PicBack.src = "";
+        }
+        function connect() {
+            clearForm();
+            var result = CertCtl.connect();            
+        }
+        function disconnect() {
+            clearForm();
+           	var result = CertCtl.disconnect();            
+        }
+        function getStatus() {        	
+            /*if (window.opener.document.getElementById("sfzjh")!=undefined&&
+            	window.opener.document.getElementById("sfzjh")!=null) {
+            	var sfzh = document.getElementById("certNumber").value;
+            	window.opener.document.getElementById("sfzjh").value = sfzh;
+				window.opener.document.getElementById("searchZk").click();
+            }*/           	
+			window.close();
+        } 
+        var xmlHttp;       
+        function showKs(){
+        	/*if ((window.opener.document.getElementById("sfzjh")==undefined||
+            	window.opener.document.getElementById("sfzjh")==null)&&
+            	(getQuery("pc")!=""||getQuery("lcid")!="")) {*/
+            	//创建一个XMLHttpRequest对象
+            	createXMLHttpRequest();            
+				//将状态触发器绑定到一个函数
+				xmlHttp.onreadystatechange = processor; 
+				//通过POST方法向指定的URL建立服务器的调用
+				if (getQuery("pc")!="") {
+					xmlHttp.open("POST", "examInfomation_getKs.do?pc="+getQuery("pc")+"&kd="+getQuery("kd")+"&kc="+getQuery("kc"));
+				}else if (getQuery("lcid")!="") {
+					xmlHttp.open("POST", "examInfomation_getKs.do?lcid="+getQuery("lcid")+"&ks="+getQuery("ks"));
+				}				 
+				//发送请求
+				xmlHttp.send(null);                        	
+            //}	
+        }
+        function createXMLHttpRequest() { 
+			if (window.ActiveXObject) { 
+				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP"); 
+			}else if (window.XMLHttpRequest) { 
+				xmlHttp = new XMLHttpRequest(); 
+			} 
+		}
+		function processor() { 
+			//定义一个变量用于存放从服务器返回的响应结果
+			var responseContext;
+			var sfzjhStr="sfzjh:";
+			if(xmlHttp.readyState == 4) { //如果响应完成
+				if(xmlHttp.status == 200) {//如果返回成功
+					//取出服务器的响应内容
+					responseContext = xmlHttp.responseText;
+					//如果注册名检查有效
+					if (responseContext!=""){						
+						var htmStr = "<tr>";
+						var ksAry = responseContext.split(",");
+						for (var i=0; i<ksAry.length; i++) {
+							var detail = ksAry[i].split(";");															
+							var xm = detail[0];
+							var sfzjh = detail[1];
+							var xxmc = detail[2];
+							var starttime = detail[3];
+							var zp = detail[4];
+							var isks = detail[5];
+							if (sfzjh==undefined||sfzjh=='') continue;
+							sfzjhStr = sfzjhStr+sfzjh+",";													
+							htmStr = htmStr+
+								"<td><div style='float:left;width:150px;height:150px;background-color:"+(isks=="1"?"#ffcc66;":"#aeaeae;")+"border:1px solid;border-color:#aeaeae;color:#FFFFFF;' align='center' id='"+
+								sfzjh+"' value='"+isks+"'>"+(zp==null||zp==undefined||zp==''?"":"<img src='uploadFile/photo/"+zp+"' style='width:auto;height:60%;'/>")+
+								"<div style='float:center;font-size:12px;'>"+xxmc+"</div>"+
+								"<div style='float:center;font-size:15px;'>"+xm+"</div>"+
+								"<div style='float:center;font-size:12px;'>"+starttime+"</div>"+								
+								"<div style='float:center;font-size:12px;'>"+sfzjh+"</div></div></td>";																					
+							if ((i+1)%4==0) htmStr = htmStr+"</tr><tr>";							
+						}
+						document.getElementById("sfzjhStr").value=sfzjhStr;
+						if (htmStr!="<tr>") {
+							if (htmStr.substring(htmStr.length-5)=="<tr>") {
+								htmStr = htmStr.substring(0, htmStr.length-5);
+							}else {
+								htmStr = htmStr+"</tr>";
+							}
+							var oTable=document.getElementById("ksinfo"); 
+							setTableInnerHTML(oTable,htmStr);							
+						}																
+					}
+				} 
+			} 
+		} 
+		function processorSf() { 
+			//定义一个变量用于存放从服务器返回的响应结果
+			var responseContext; 
+			if(xmlHttp.readyState == 4) { //如果响应完成
+				if(xmlHttp.status == 200) {//如果返回成功
+					//取出服务器的响应内容
+					responseContext = xmlHttp.responseText; 
+					//如果注册名检查有效
+					if (responseContext!=""){
+						document.getElementById(responseContext).style.backgroundColor="#ffcc66";											
+					}else {
+						document.getElementById(responseContext).style.backgroundColor="#ffcc66";
+						alert("已验证，不必重复验证！");
+					}
+				} 
+			} 
+		}
+        function getQuery(para) {
+        	var oRegex = new RegExp('[\?&]' + para + '=([^&]+)', 'i');
+        	var oMatch = oRegex.exec(window.location.search);
+        	if (oMatch && oMatch.length > 1) 
+        		return decodeURIComponent(oMatch[1]);
+        	else 
+        		return '';
+        }
+        function readCert() {
+        	//clearForm();
+           	var startDt = new Date();
+            var result = CertCtl.readCert();
+            var endDt = new Date();            
+            var resultObj = toJson(result);
+            if (resultObj.resultFlag == 0) {
+                document.getElementById("partyName").value = resultObj.resultContent.partyName;
+                document.getElementById("gender").value = resultObj.resultContent.gender;
+                //document.getElementById("nation").value = resultObj.resultContent.nation;
+                //document.getElementById("bornDay").value = resultObj.resultContent.bornDay;
+                //document.getElementById("certAddress").value = resultObj.resultContent.certAddress;
+                document.getElementById("certNumber").value = resultObj.resultContent.certNumber;
+                //document.getElementById("certOrg").value = resultObj.resultContent.certOrg;
+                document.getElementById("effDate").value = resultObj.resultContent.effDate;
+                document.getElementById("expDate").value = resultObj.resultContent.expDate;
+                document.getElementById("handjpg").src = "data:image/jpeg;base64," + resultObj.resultContent.identityPic;
+                PicFront.src = "data:image/jpeg;base64," + resultObj.resultContent.base64ID_PicFront;
+                //PicBack.src = "data:image/jpeg;base64," + resultObj.resultContent.base64ID_PicBack;
+                
+                var sfzh = document.getElementById("certNumber").value;
+                var allSfzjhs = document.getElementById("sfzjhStr").value;
+                if (allSfzjhs.indexOf(sfzh)<0) {
+                	alert("不是本场考生！");
+                }else if (document.getElementById(sfzh).getAttribute("value")=="1") {
+                	alert("身份证已验！");                
+                }else {
+                	createXMLHttpRequest();            
+					xmlHttp.onreadystatechange = processorSf;
+					if (getQuery("pc")!="") {
+						xmlHttp.open("POST", "examInfomation_getKsyz.do?pc="+getQuery("pc")+"&sfzh="+sfzh);
+					}else if (getQuery("lcid")!="") {
+						xmlHttp.open("POST", "examInfomation_getKsyz.do?lcid="+getQuery("lcid")+"&sfzh="+sfzh);
+					} 
+					xmlHttp.send(null);
+                }                							
+            }            
+        }
+        function yzCert(){
+        	var sfzh = document.getElementById("certNumber").value;        	
+          	var allSfzjhs = document.getElementById("sfzjhStr").value;
+          	if (allSfzjhs.indexOf(sfzh)<0) {
+               	alert("不是本场考生！");
+          	}else if (document.getElementById(sfzh).getAttribute("value")=="1") {
+              	alert("身份证已验！");                
+          	}else {
+           	   	createXMLHttpRequest();            
+				xmlHttp.onreadystatechange = processorSf;
+				if (getQuery("pc")!="") {
+					xmlHttp.open("POST", "examInfomation_getKsyz.do?pc="+getQuery("pc")+"&sfzh="+sfzh);
+				}else if (getQuery("lcid")!="") {
+					xmlHttp.open("POST", "examInfomation_getKsyz.do?lcid="+getQuery("lcid")+"&sfzh="+sfzh);
+				} 
+				xmlHttp.send(null);
+         	}
+        }
+        function setTableInnerHTML(table, html) { 
+			if(navigator && navigator.userAgent.match(/msie/i)){ 
+				var temp = table.ownerDocument.createElement('div'); 
+				temp.innerHTML = '<table><tbody>' + html + '</tbody></table>'; 
+				if(table.tBodies.length == 0){ 
+					var tbody=document.createElement("tbody"); 
+					table.appendChild(tbody); 
+				} 
+				table.replaceChild(temp.firstChild.firstChild, table.tBodies[0]); 
+			} else { 
+				table.innerHTML=html; 
+			} 
+		} 
+        window.setInterval("readCert()",1000);
+        window.onload=showKs();       
+    </script>    
+</head>
+<body bgcolor="#D2F0FF">
+	<div style="width:51%;float:left;">
+	<input type="hidden" name="sfzjhStr" id="sfzjhStr">
+    <table style="width:100%;" align="center">
+        <tr>
+            <td colspan="3">                 
+                <img id="PicFront" name="PicFront" alt="" src="" style="height:209px;width:327px"/> 
+                <img id="handjpg" alt="" src="" style="height: 126px; width: 102px"/> 
+                <!--img id="PicBack" name="PicBack" alt="" src="" style="height:209px;width:327px"/-->                                       
+            </td>            
+        </tr>
+      	<tr>
+            <td align="right" style="width:28%;">姓名：</td>
+            <td style="width:72%;"><input type="text" id="partyName" size="49" style="width:400px;" readonly="readonly"/></td>            
+        </tr>
+        <tr>
+            <td align="right">性别：</td>
+            <td><input type="text" id="gender" size="49" style="width: 400px;" readonly="readonly"/></td>
+        </tr>
+        <!--
+        <tr>
+            <td align="right">民族：</td>
+            <td><input type="text" id="nation" size="49" style="width: 400px;" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td align="right">出生日期：</td>
+            <td><input type="text" id="bornDay" size="49" style="width: 400px;" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td align="right">住址：</td>
+            <td><input type="text" id="certAddress" size="49" style="width: 400px;" readonly="readonly"/></td>
+        </tr>
+        -->
+        <tr>
+            <td align="right">身份证号：</td>
+            <td><input type="text" id="certNumber" size="49" style="color: #FF0000; width: 400px;"/></td>
+        </tr>
+        <!-- 
+        <tr>
+            <td align="right">签发机关：</td>
+            <td><input type="text" id="certOrg" size="49" style="width: 400px;" readonly="readonly"/></td>
+        </tr>
+        -->
+        <tr>
+            <td align="right">开始期限：</td>
+            <td><input type="text" id="effDate" size="49" style="width: 400px;" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td align="right">结束期限：</td>
+            <td><input type="text" id="expDate" size="49" style="width: 400px;" readonly="readonly"/></td>
+        </tr> 
+        <tr align="center" valign="middle" style="height:80px;">
+            <td colspan="3">
+            	<input type="button" value="连接" onclick="connect()"/>
+            	<input type="button" value="读卡" onclick="readCert()"/>
+            	<input type="button" value="断开" onclick="disconnect()"/>
+            	<input type="button" value="验证" onclick="yzCert()"/>
+            	<input type="button" value="关闭" onclick="getStatus()"/>            	
+            </td>            
+        </tr>       
+    </table>
+    </div>
+    <div style="width:49%;float:right;"><table style="width:100%;" align="center" id="ksinfo"></table></div>     
+    <div style="width:49%;float:right;height:50px;">
+    <object id="CertCtl" name="CertCtl" type="application/cert-reader" width="0" height="0">
+	该浏览器不支持身份证阅读器控件！
+    </object>
+    </div>   
+</body>
+</html>

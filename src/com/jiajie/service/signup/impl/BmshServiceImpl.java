@@ -1,0 +1,329 @@
+package com.jiajie.service.signup.impl;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import jxl.Workbook;
+import jxl.format.Colour;
+import jxl.format.UnderlineStyle;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+
+import org.hibernate.transform.Transformers;
+import org.springframework.stereotype.Service;
+
+import com.jiajie.bean.MsgBean;
+import com.jiajie.bean.PageBean;
+import com.jiajie.service.ServiceBridge;
+import com.jiajie.service.core.impl.FileUpServiceImpl;
+import com.jiajie.service.signup.BmshService;
+import com.jiajie.service.signup.SignupService;
+import com.jiajie.util.bean.MBspInfo;
+import com.jiajie.util.bean.MBspOrgan;
+@Service("bmshService")
+public class BmshServiceImpl extends ServiceBridge implements BmshService{
+
+	
+	public PageBean getList(String xn,MBspInfo mbf,String mc,String ckdw,String zkdw,String fpzt) {
+		String nn = "";
+		String xq = "";
+		String xq1 = "";
+		if(xn!=null && !"".equals(xn)){
+			String[] str = xn.split(" ");
+			nn = str[0].substring(0, 4);
+			xq = str[1];	
+		}
+
+		String 	sql = "select DISTINCT s1.* from (select DISTINCT rd.BMLCID,rd.JFPZ,rd.XN,rd.XQM,rd.EXAMNAME,"+
+				"rd.DWID,rd.DWTYPE,case rd.fpzt when '2' then '已审核'  when '1' then '未审核' else '未申请' END AS fpzt," +
+				"case rd.SHFLAG when '0' then '已上报' when '1' then '通过' when '3' then '已缴费' when '2' then '不通过' end as SHFLAG,xq.mc XQ,rd.SL,"+
+				"IFNULL(jb.region_edu,(select (select region_edu from com_mems_organ where region_code=a.SSZGJYXZDM) from zxxs_xx_jbxx a where a.xx_jbxx_id=rd.dwid)) MC,"+
+				"IFNULL((select xxmc from zxxs_xx_jbxx where xx_jbxx_id = rd.dwid),'全部') CKDW " +
+				"from cus_kwbm_examround rd "+ 
+				"left join com_mems_organ jb on jb.region_code = rd.dwid "+
+				"left join com_mems_organ jb1 on jb1.region_code = jb.parent_code "+
+				"left join zxxs_xx_jbxx xx on xx.XX_JBXX_ID=rd.DWID  "+
+				"left join zd_xq xq on rd.xqm=xq.dm "+
+				"where	rd.SHFLAG between '0' and '3' ) s1  where 1=1  ";
+		
+		if(nn==null || "".equals(nn)){
+			sql += " and s1.xn=(select xnmc from zxxs_xnxq where mr='1')";
+		}else{
+			if(nn!=null && !"".equals(nn)){
+				sql += " and s1.xn='"+nn+"'";
+			}
+			if(xq!=null && !"".equals(xq)){
+				sql += " and s1.xq = '"+xq+"'";
+			}
+		}
+		if((ckdw != null) && (!"".equals(ckdw))){
+		    	sql = sql + " and s1.CKDW like '%" + ckdw + "%'";
+		  }
+		if((zkdw != null) && (!"".equals(zkdw))){
+	    	sql = sql + " and s1.MC like '%" + zkdw + "%'";
+		}
+		if((fpzt != null) && (!"".equals(fpzt))){
+			if(fpzt.equals("2")){
+				sql +=" and s1.fpzt = '已审核'" ;
+			}
+			if(fpzt.equals("1")){
+				sql +=" and s1.fpzt = '未申请'" ;
+			}
+			if(fpzt.equals("3")){
+				sql +=" and s1.fpzt = '未审核'" ;
+			}
+			if(fpzt.equals("0")){
+			
+			}
+		}
+		if(mc!=null && !("").equals(mc)){
+			if(mc.equals("3")){
+				sql +=" and s1.SHFLAG = '已缴费 '" ;
+			}
+			if(mc.equals("1")){
+				sql +=" and s1.SHFLAG = '通过' " ;
+			}
+			if(mc.equals("2")){
+				sql +=" and s1.SHFLAG = '不通过'" ;
+			}
+			if(mc.equals("4")){
+				sql +=" and s1.SHFLAG = '已上报'" ;
+			}
+
+		}else{
+		
+				sql +=" and s1.SHFLAG = '已缴费 '" ;
+			
+		}
+	
+		sql +=" order by s1.BMLCID desc";
+
+		return getSQLPageBean(sql); 
+ 
+	}
+
+	@Override
+	public com.jiajie.bean.MsgBean getObject(String bmlcid) {
+		
+			String sql = "select SL,JFPZ,LXR,LXDH from cus_kwbm_examround where bmlcid ='"+bmlcid+"'";
+			
+			List<Object> list = getListSQL(sql);
+			if(list!=null && list.size()>0){
+				
+				getMsgBean(list.get(0));
+				
+			}else{getMsgBean(null );}
+			
+			
+				
+			return this.MsgBean;
+	}
+
+	@Override
+	public com.jiajie.bean.MsgBean up(String bmlcid) {
+		if(bmlcid!=null){
+				String sql = "update cus_kwbm_examround set SHFLAG =1,SHSM='' where bmlcid='"+bmlcid+"'";
+				update(sql);
+				this.getMsgBean(true,"审核通过！报名成功！");
+	
+		}else{
+			this.getMsgBean(false,"审核失败，轮次为空！");
+		}
+		
+		return MsgBean;
+	}
+
+	@Override
+	public com.jiajie.bean.MsgBean btg(String bmlcid, String sh) {
+		// TODO Auto-generated method stub
+		
+		if(bmlcid!=null){
+			String sql = "update cus_kwbm_examround set SHFLAG =2,SHSM ='"+sh+"' where bmlcid='"+bmlcid+"'";
+			update(sql);
+			this.getMsgBean(true,"审核不通过！");
+		}else{
+			this.getMsgBean(false,"审核失败,轮次为空！");
+		}
+		return this.MsgBean;
+	}
+
+	@Override
+	public com.jiajie.bean.MsgBean updateZt(String bmlcid) {
+		List<Map<String,String>> ls = getSession().createSQLQuery("select c.SHFLAG,c.SFFB from cus_kw_examround c join cus_kwbm_examround r on c.LCID=r.LCID where r.BMLCID='"+bmlcid+"'").setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+		if("0".equals(ls.get(0).get("SHFLAG")) || "1".equals(ls.get(0).get("SHFLAG")) || "0".equals(ls.get(0).get("SFFB"))){
+			return getMsgBean(false,"该考试轮次已上报或已审核或已发布，不能取消上报！");
+		}
+		List<Map<String,String>> ls1 = getSession().createSQLQuery("select SHFLAG from cus_kwbm_examround where BMLCID='"+bmlcid+"'").setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+		if("1".equals(ls1.get(0).get("SHFLAG")) || "2".equals(ls1.get(0).get("SHFLAG"))){
+			return getMsgBean(false,"该单位报名轮次已审核，不能取消上报！");
+		}
+		if("3".equals(ls1.get(0).get("SHFLAG"))){
+			return getMsgBean(false,"该单位报名轮次已缴费，不能取消上报！");
+		}
+		String sql = "update cus_kwbm_examround set shflag='' where bmlcid='"+bmlcid+"'";
+		String sql1 = "update cus_kw_examinee set flag='' where bmlcid='"+bmlcid+"'";
+		update(sql);
+		update(sql1);
+		return getMsgBean(true,"取消上报成功！");
+	}
+
+	public com.jiajie.bean.MsgBean updateBm(String bmlcid){
+		List<Map<String,String>> ls = getSession().createSQLQuery("select c.SHFLAG,c.SFFB from cus_kw_examround c join cus_kwbm_examround r on c.LCID=r.LCID where r.BMLCID='"+bmlcid+"'").setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+		if("0".equals(ls.get(0).get("SHFLAG")) || "1".equals(ls.get(0).get("SHFLAG")) || "0".equals(ls.get(0).get("SFFB"))){
+			return getMsgBean(false,"该考试轮次已上报或已审核或已发布，不能取消报名！");
+		}
+		List<Map<String,String>> ls1 = getSession().createSQLQuery("select SHFLAG from cus_kwbm_examround where BMLCID='"+bmlcid+"'").setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+		if("1".equals(ls1.get(0).get("SHFLAG"))){
+			return getMsgBean(false,"该单位报名轮次已审核通过，不能取消报名！");
+		}
+		String sql = "update cus_kwbm_examround set jfpz='',shsm='',lxr='',lxdh='',shflag='' where bmlcid='"+bmlcid+"'";
+		String sql1 = "update cus_kw_examinee set flag='' where bmlcid='"+bmlcid+"'";
+		update(sql);
+		update(sql1);
+		return getMsgBean(true,"取消报名成功！");
+	}
+	public com.jiajie.bean.MsgBean dxsl(String xn ,String mc,String ckdw,String zkdw,String fpzt) {
+		String nn = "";
+		String xq = "";
+		String xq1 = "";
+		if(xn!=null && !"".equals(xn)){
+			String[] str = xn.split(" ");
+			nn = str[0].substring(0, 4);
+			xq = str[1];	
+		}
+		MsgBean mb = new MsgBean();
+		WritableWorkbook wwb = null;
+		WritableSheet ws = null;
+		try {
+			String path = FileUpServiceImpl.class.getResource("").toString();
+			path = path.substring(6,path.lastIndexOf("xjgl")+4);
+			path=File.separator+path;
+			File f = new File(path + "/export/excel/temporary/" +
+					new Date().getTime() + ".xls");
+			wwb = Workbook.createWorkbook(f,Workbook.getWorkbook(new File(File.separator+path+"/export/excel/temp/shdc.xls")));
+			ws = wwb.getSheet(0);
+			mb.setSuccess(true);
+			mb.setData(f.getPath().substring(f.getPath().indexOf("export")));
+			WritableFont wfc = new WritableFont(WritableFont.ARIAL,10,WritableFont.NO_BOLD,false,
+					UnderlineStyle.NO_UNDERLINE,Colour.BLACK);
+			WritableCellFormat wcfFC = new WritableCellFormat(wfc);
+			
+//			String sql ="SELECT c.nj,c.XM,c.SFZJH,CASE WHEN c.xbm = 1 THEN '男' ELSE '女' END AS xbm ," +
+//					"z1.ZW,(SELECT zflb FROM zd_zflb WHERE id = z1.zflx) zflx," +
+//					"z1.zffw,z.XXMC,IFNULL(z1.fzdw,'') fzdw , z1.ZY,e.XN," +
+//					"(select mc FROM zd_xq where dm = e.XQM ) xq," +
+//					"(SELECT mc FROM  zd_mz WHERE dm = z1.MZM ) MZM ," +
+//					" (SELECT mc FROM zd_zzmm WHERE dm = z1.ZZMM ) ZZMM,(SELECT mc FROM zd_xd WHERE dm = z1.WHCD ) WHCD ,z.SSZGJYXZMC " +
+//					"FROM cus_kw_examinee c  " +
+//					"JOIN cus_kwbm_examround e ON  e.bmlcid = c.bmlcid " +
+//					" JOIN zxxs_xx_jbxx z ON  z.XX_JBXX_ID = c.XXDM " +
+//					"JOIN zxxs_xs_jbxx z1 ON z1.sfzjh= c.sfzjh " +
+//					"WHERE c.nj='合格'";
+//			
+			String 	sql = "select DISTINCT s1.* from (select DISTINCT rd.BMLCID,rd.XN,rd.EXAMNAME,"+
+					"rd.DWID," +
+					"case rd.SHFLAG when '0' then '已上报' when '1' then '通过' when '3' then '已缴费' when '2' then '不通过' end as SHFLAG,xq.mc XQ,rd.SL," +
+					"case rd.fpzt when '2' then '已审核'  when '1' then '未审核' else '未申请' END AS fpzt,"+
+					"IFNULL(jb.region_edu,(select (select region_edu from com_mems_organ where region_code=a.SSZGJYXZDM) from zxxs_xx_jbxx a where a.xx_jbxx_id=rd.dwid)) MC,"+
+					"IFNULL((select xxmc from zxxs_xx_jbxx where xx_jbxx_id = rd.dwid),'全部') CKDW " +
+					"from cus_kwbm_examround rd "+ 
+					"left join com_mems_organ jb on jb.region_code = rd.dwid "+
+					"left join com_mems_organ jb1 on jb1.region_code = jb.parent_code "+
+					"left join zxxs_xx_jbxx xx on xx.XX_JBXX_ID=rd.DWID  "+
+					"left join zd_xq xq on rd.xqm=xq.dm "+
+					"where	rd.SHFLAG between '0' and '3'  ) s1  where 1=1  ";
+			if(nn==null || "".equals(nn)){
+				sql += " and s1.xn=(select xnmc from zxxs_xnxq where mr='1')";
+			}else{
+				if(nn!=null && !"".equals(nn)){
+					sql += " and s1.xn='"+nn+"'";
+				}
+				if(xq!=null && !"".equals(xq)){
+					sql += " and s1.xq = '"+xq+"'";
+				}
+			}
+			if((ckdw != null) && (!"".equals(ckdw))){
+			    	sql = sql + " and s1.CKDW like '%" + ckdw + "%'";
+			  }
+			if((zkdw != null) && (!"".equals(zkdw))){
+		    	sql = sql + " and s1.MC like '%" + zkdw + "%'";
+			}
+			if((fpzt != null) && (!"".equals(fpzt))){
+				if(fpzt.equals("2")){
+					sql +=" and s1.fpzt = '已审核'" ;
+				}
+				if(fpzt.equals("1")){
+					sql +=" and s1.fpzt = '未申请'" ;
+				}
+				if(fpzt.equals("3")){
+					sql +=" and s1.fpzt = '未审核'" ;
+				}
+				if(fpzt.equals("0")){
+				
+				}
+			}
+			if(mc!=null && !("").equals(mc)){
+				if(mc.equals("3")){
+					sql +=" and s1.SHFLAG = '已缴费 '" ;
+				}
+				if(mc.equals("1")){
+					sql +=" and s1.SHFLAG = '通过' " ;
+				}
+				if(mc.equals("2")){
+					sql +=" and s1.SHFLAG = '不通过'" ;
+				}
+				if(mc.equals("4")){
+					sql +=" and s1.SHFLAG = '已上报'" ;
+				}
+
+			}else{
+			
+					sql +=" and s1.SHFLAG = '已缴费 '" ;
+				
+			}
+			List<Map<String,Object>> list=getListSQL(sql);
+			for (int i = 0; i < list.size(); i++) {
+				ws.addCell(new Label(0, i+1,(i + 1)+""));
+				ws.addCell(new Label(1, i+1,list.get(i).get("XN").toString()));
+				ws.addCell(new Label(2, i+1,list.get(i).get("XQ").toString()));
+				ws.addCell(new Label(3, i+1,list.get(i).get("EXAMNAME").toString()));
+				ws.addCell(new Label(4, i+1,list.get(i).get("MC").toString()));
+				ws.addCell(new Label(5, i+1,list.get(i).get("CKDW").toString()));
+				ws.addCell(new Label(6, i+1,list.get(i).get("SL").toString()));
+				ws.addCell(new Label(7, i+1,list.get(i).get("SHFLAG").toString()));
+				ws.addCell(new Label(8, i+1,list.get(i).get("fpzt").toString()));
+		
+			
+		
+		
+			}
+			wwb.write();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				wwb.close();
+			}
+			catch (WriteException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return mb;
+	}
+	
+	
+}
