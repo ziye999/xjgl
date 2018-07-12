@@ -104,7 +104,7 @@ public class ExamineePrintServiceImpl extends ServiceBridge implements
 			path=File.separator+path;
 			File f = new File(path + "/export/excel/temp/" +
 					new Date().getTime() + ".xls");
-            wwb = Workbook.createWorkbook(f,Workbook.getWorkbook(new File(File.separator+path+"/export/excel/temp/invoice.xls")));
+			wwb = Workbook.createWorkbook(f,Workbook.getWorkbook(new File(File.separator+path+"/export/excel/temp/invoice.xls")));
 			ws = wwb.getSheet(0);
 			mb.setSuccess(true);
 			mb.setData(f.getPath().substring(f.getPath().indexOf("export")));

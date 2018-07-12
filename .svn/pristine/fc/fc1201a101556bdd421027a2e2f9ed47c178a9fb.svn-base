@@ -239,10 +239,6 @@ public class uploadCertificateServiceImpl extends ServiceBridge implements uploa
 		}
 		if(NUMBER==null || "".equals(NUMBER)){
 			return getMsgBean(false,"人数不能为空！");
-		}else{
-			if(Integer.parseInt(NUMBER) <= 0){
-				return getMsgBean(false,"人数不能为零或者负数！");
-			}
 		}
 		if(PHONE==null || "".equals(PHONE)){
 			return getMsgBean(false,"推送手机不能为空！");
@@ -278,31 +274,24 @@ public class uploadCertificateServiceImpl extends ServiceBridge implements uploa
 		String sql5 = "SELECT NUMBER FROM cus_kw_invoice_excal WHERE ID ='" + orderNum + "'";
 		List<Map<String,Object>> list5=getListSQL(sql5);
 		int AMOUNT = Integer.parseInt(NUMBER) * 95;
-//		if(!NUMBER.equals(list5.get(0).get("NUMBER").toString())){
-//			String sql3 = "update cus_kw_invoice_excal set STATE='0' WHERE BMLCID = '" + bmlcid +"'";
-//			update(sql3);
-//			String sql6 = "update cus_kwbm_examround set fpzt = '0' WHERE BMLCID ='" + bmlcid + "'";
-//			update(sql6);
-//		}
+		if(!NUMBER.equals(list5.get(0).get("NUMBER").toString())){
+			String sql3 = "update cus_kw_invoice_excal set STATE='0' WHERE BMLCID = '" + bmlcid +"'";
+			update(sql3);
+		}
 		String sql2 = "update cus_kw_invoice_excal set NAME='" + NAME + "',DUTY ='" + DUTY
 				+ "',ADDRESS = '" + ADDRESS + "',TELLPHONE = '" + TELLPHONE + "',EMAIL = '" + EMAIL
 				+ "',BANKNAME = '" + BANKNAME + "',BANKNUM = '" + BANKNUM + "',PHONE = '" + PHONE
 				+ "',REMARK = '" + REMARK + "',AMOUNT = '" + AMOUNT + "',NUMBER = '" + NUMBER +"' WHERE ID = '" + orderNum +"'";
 		update(sql2);
 		if("1".equals(state)){
-			if(!NUMBER.equals(list5.get(0).get("NUMBER").toString())){
-				String sql3 = "update cus_kw_invoice_excal set STATE='0' WHERE BMLCID = '" + bmlcid +"'";
-				update(sql3);
-				String sql6 = "update cus_kwbm_examround set fpzt = '0' WHERE BMLCID ='" + bmlcid + "'";
-				update(sql6);
-			}
-//			String sql3 = "update cus_kw_invoice_excal set NAME='" + NAME + "',DUTY ='" + DUTY
-//					+ "',ADDRESS = '" + ADDRESS + "',TELLPHONE = '" + TELLPHONE + "',EMAIL = '" + EMAIL
-//					+ "',BANKNAME = '" + BANKNAME + "',BANKNUM = '" + BANKNUM + "',PHONE = '" + PHONE
-//					+ "',REMARK = '" + REMARK + "',AMOUNT = '" + AMOUNT + "',NUMBER = '" + NUMBER +"' WHERE ID = '" + orderNum +"'";
-//			update(sql3);
+			String sql3 = "update cus_kw_invoice_excal set NAME='" + NAME + "',DUTY ='" + DUTY
+					+ "',ADDRESS = '" + ADDRESS + "',TELLPHONE = '" + TELLPHONE + "',EMAIL = '" + EMAIL
+					+ "',BANKNAME = '" + BANKNAME + "',BANKNUM = '" + BANKNUM + "',PHONE = '" + PHONE
+					+ "',REMARK = '" + REMARK + "',AMOUNT = '" + AMOUNT + "',NUMBER = '" + NUMBER +"' WHERE ID = '" + orderNum +"'";
+			update(sql3);
 
-			
+			String sql6 = "update cus_kwbm_examround set fpzt = '0' WHERE BMLCID ='" + bmlcid + "'";
+			update(sql6);
 		}
 		this.getMsgBean(true,"修改发票成功！");
 		return this.MsgBean;
